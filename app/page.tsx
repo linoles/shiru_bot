@@ -1,0 +1,269 @@
+import "@/app/globals.css";
+
+export default function Home() {
+  return (
+    <div id="root">
+      {/*hk*/ }
+      <div role="region" aria-label="Notifications (F8)" tabIndex={-1} style={{ pointerEvents: "none" }}>
+        <ol tabIndex={-1} className="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"></ol>
+      </div>
+      <section aria-label="Notifications alt+T" tabIndex={-1} aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section>
+      <div className="min-h-screen bg-background text-foreground dark">
+        <div className="flex items-center justify-between p-4 border-b border-border">
+          <div className="flex items-center space-x-2">
+            <h1 className="text-2xl font-extrabold"><span className="text-foreground">SHIRU</span><span className="text-primary ml-1">BOT</span></h1>
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-rotate-ccw">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+                <path d="M3 3v5h5"></path>
+              </svg>
+            </button>
+            <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 w-10">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-settings">
+                <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div className="p-4">
+          <div className="flex items-center justify-between mb-4"><span className="text-sm text-muted-foreground">Общий прогресс</span><span className="text-sm font-medium"><span className="text-destructive">1247</span><span className="text-muted-foreground ml-1">очков</span></span>
+          </div>
+          <div className="grid grid-cols-3 gap-4 mb-6">
+            <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border">
+              <div className="p-3 text-center">
+                <div className="text-lg font-extrabold text-primary">1&nbsp;247</div>
+                <div className="text-xs text-muted-foreground">Очки</div>
+              </div>
+            </div>
+            <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border">
+              <div className="p-3 text-center">
+                <div className="text-lg font-extrabold text-yellow-400">15</div>
+                <div className="text-xs text-muted-foreground">Уровень</div>
+              </div>
+            </div>
+            <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border">
+              <div className="p-3 text-center">
+                <div className="text-lg font-extrabold text-secondary">#342</div>
+                <div className="text-xs text-muted-foreground">Рейтинг</div>
+              </div>
+            </div>
+          </div>
+          <h2 className="text-lg font-bold mb-4 text-muted-foreground">Выбери игру</h2></div>
+        <div className="px-4 space-y-3">
+          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer">
+            <div className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-[48px] h-12 flex items-center justify-center rounded-xl bg-blue-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-scissors text-white">
+                      <circle cx="6" cy="6" r="3"></circle>
+                      <path d="M8.12 8.12 12 12"></path>
+                      <path d="M20 4 8.12 15.88"></path>
+                      <circle cx="6" cy="18" r="3"></circle>
+                      <path d="M14.8 14.8 20 20"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">КНБ</h3>
+                    <p className="text-sm text-muted-foreground">Сыграй в КНБ</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="text-right">
+                    <div className="text-sm text-muted-foreground">Игрок</div>
+                    <div className="font-medium text-primary">1&nbsp;247</div>
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between">
+                <div className="flex items-center space-x-2"><span className="text-sm text-muted-foreground">0%</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trophy text-muted-foreground">
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                    <path d="M4 22h16"></path>
+                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                  </svg>
+                </div>
+                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">342</div>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer">
+            <div className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 rounded-xl bg-red-500 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-coins text-white">
+                      <circle cx="8" cy="8" r="6"></circle>
+                      <path d="M18.09 10.37A6 6 0 1 1 10.34 18"></path>
+                      <path d="M7 6h1v4"></path>
+                      <path d="m16.71 13.88.7.71-2.82 2.82"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">Казино</h3>
+                    <p className="text-sm text-muted-foreground">Рулетка и слоты</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="text-right">
+                    <div className="text-sm text-muted-foreground">Игрок</div>
+                    <div className="font-medium text-primary">856</div>
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between">
+                <div className="flex items-center space-x-2"><span className="text-sm text-muted-foreground">0%</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trophy text-muted-foreground">
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                    <path d="M4 22h16"></path>
+                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                  </svg>
+                </div>
+                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">128</div>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer">
+            <div className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 rounded-xl bg-green-500 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-puzzle text-white">
+                      <path d="M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">Эмодзи-пазл</h3>
+                    <p className="text-sm text-muted-foreground">Собери картинку</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="text-right">
+                    <div className="text-sm text-muted-foreground">Игрок</div>
+                    <div className="font-medium text-primary">623</div>
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between">
+                <div className="flex items-center space-x-2"><span className="text-sm text-muted-foreground">0%</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trophy text-muted-foreground">
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                    <path d="M4 22h16"></path>
+                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                  </svg>
+                </div>
+                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">95</div>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer">
+            <div className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 rounded-xl bg-orange-500 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-gift text-white">
+                      <rect x="3" y="8" width="18" height="4" rx="1"></rect>
+                      <path d="M12 8v13"></path>
+                      <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path>
+                      <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">Розыгрыш</h3>
+                    <p className="text-sm text-muted-foreground">Испытай удачу</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="text-right">
+                    <div className="text-sm text-muted-foreground">Игрок</div>
+                    <div className="font-medium text-primary">2&nbsp;100</div>
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between">
+                <div className="flex items-center space-x-2"><span className="text-sm text-muted-foreground">0%</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trophy text-muted-foreground">
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                    <path d="M4 22h16"></path>
+                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                  </svg>
+                </div>
+                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">567</div>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer">
+            <div className="p-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <div className="w-12 h-12 rounded-xl bg-purple-500 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-target text-white">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <circle cx="12" cy="12" r="6"></circle>
+                      <circle cx="12" cy="12" r="2"></circle>
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground">Сто к одному</h3>
+                    <p className="text-sm text-muted-foreground">Угадай ответ</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <div className="text-right">
+                    <div className="text-sm text-muted-foreground">Игрок</div>
+                    <div className="font-medium text-primary">445</div>
+                  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
+                    <path d="m9 18 6-6-6-6"></path>
+                  </svg>
+                </div>
+              </div>
+              <div className="mt-3 flex items-center justify-between">
+                <div className="flex items-center space-x-2"><span className="text-sm text-muted-foreground">0%</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trophy text-muted-foreground">
+                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                    <path d="M4 22h16"></path>
+                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                  </svg>
+                </div>
+                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">89</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="h-6"></div>
+      </div>
+    </div>
+  );
+}
