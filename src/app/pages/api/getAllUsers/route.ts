@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import db from '@/src/app/db';
 
-export async function POST() {
+export async function GET() {
   try {
     const users = await new Promise((resolve, reject) => {
       db.all("SELECT tgId, tgNick, tgUsername FROM users_data", (error, result) => {
