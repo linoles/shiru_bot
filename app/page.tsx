@@ -13,7 +13,7 @@ export default function Home() {
   let [tg, setTg] = useState("");
   
   useEffect(() => {
-    if (typeof window.Telegram !== "undefined") {
+    if (window.Telegram.WebApp.requestFullscreen) {
       setTg(JSON.stringify(window.Telegram.WebApp));
       window.Telegram.WebApp.requestFullscreen();
     }
@@ -26,11 +26,11 @@ export default function Home() {
       <section aria-label="Notifications alt+T" tabIndex={-1} aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section>
       <div className="min-h-screen bg-background text-foreground dark">
         <div className="flex items-center justify-between p-4 border-b border-border">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 mt-5">
             <h1 className="text-2xl font-extrabold"><span className="text-foreground">SHIRU</span><span className="text-primary ml-1">BOT</span></h1>
             <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 mt-5">
             <button className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-10 w-10">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-rotate-ccw">
                 <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
