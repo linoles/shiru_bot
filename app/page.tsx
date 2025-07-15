@@ -1,5 +1,11 @@
 'use client';
 
+declare global {
+  interface Window {
+    Telegram: any
+  }
+}
+
 import "@/app/globals.css";
 import { useEffect, useState } from "react";
 
