@@ -8,6 +8,7 @@ export interface User {
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  console.info('ok');
   db.all("SELECT tgId, tgNick, tgUsername FROM users_data", (error, result) => {
     if (error) {
       return res.status(500).json({ error: error.message });

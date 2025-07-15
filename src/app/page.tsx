@@ -23,7 +23,7 @@ export default function Home() {
       /*
       setTg(JSON.stringify(window.Telegram.WebApp));
       window.Telegram.WebApp.requestFullscreen(); */
-      fetch("https://shiru-bot.vercel.app/api/getAllUsers", {
+      fetch("http://shiru-bot.vercel.app/api/getAllUsers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
