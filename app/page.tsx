@@ -6,20 +6,44 @@ declare global {
   }
 }
 
+export interface User {
+  tgId: number;
+  tgNick: string;
+  tgUsername: string;
+}
+
 import "@/app/globals.css";
 import { useEffect, useState } from "react";
 
 export default function Home() {
   let [tg, setTg] = useState("");
-  
+  const [user, setUser] = useState<User | undefined>(undefined);
+
   useEffect(() => {
     if (window.Telegram.WebApp.requestFullscreen) {
       setTg(JSON.stringify(window.Telegram.WebApp));
       window.Telegram.WebApp.requestFullscreen();
+      fetch("http://shiru-bot.vercel.app/api/getAllUsers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Failed to fetch users");
+          }
+          return res.json();
+        })
+        .then((users: User[]) => {
+          setUser(users.find((user) => user.tgId == JSON.parse(tg).initDataUnsafe.user.id));
+        })
+        .catch((error) => console.error(error.message));
     }
-  })
+  }, []);
   return (
     <div id="root">
+      <div>{JSON.stringify(user)}</div>
       <div role="region" aria-label="Notifications (F8)" tabIndex={-1} style={{ pointerEvents: "none" }}>
         <ol tabIndex={-1} className="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"></ol>
       </div>
@@ -27,7 +51,7 @@ export default function Home() {
       <div className="min-h-screen bg-background text-foreground dark">
         <div className="flex items-center justify-center p-4 border-b border-border">
           <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-extrabold"><span className="text-foreground">SHIRU</span><span className="text-primary ml-1">BOT</span></h1>
+            <h1 className="text-2xl font-bold"><span className="text-foreground">SHIRU</span><span className="text-primary ml-1">BOT</span></h1>
             <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
           </div>
         </div>
@@ -37,19 +61,19 @@ export default function Home() {
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border">
               <div className="p-3 text-center">
-                <div className="text-lg font-extrabold text-primary">1&nbsp;247</div>
+                <div className="text-lg font-bold text-primary">1&nbsp;247</div>
                 <div className="text-xs text-muted-foreground">Очки</div>
               </div>
             </div>
             <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border">
               <div className="p-3 text-center">
-                <div className="text-lg font-extrabold text-yellow-400">15</div>
+                <div className="text-lg font-bold text-yellow-400">15</div>
                 <div className="text-xs text-muted-foreground">Уровень</div>
               </div>
             </div>
             <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border">
               <div className="p-3 text-center">
-                <div className="text-lg font-extrabold text-secondary">#342</div>
+                <div className="text-lg font-bold text-secondary">#342</div>
                 <div className="text-xs text-muted-foreground">Рейтинг</div>
               </div>
             </div>
