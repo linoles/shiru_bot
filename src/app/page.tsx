@@ -20,9 +20,10 @@ export default function Home() {
   const [user, setUser] = useState<User | undefined>(undefined);
 
   useEffect(() => {
+      /*
       setTg(JSON.stringify(window.Telegram.WebApp));
-      window.Telegram.WebApp.requestFullscreen();
-      fetch("/api/getAllUsers", {
+      window.Telegram.WebApp.requestFullscreen(); */
+      fetch("https://shiru-bot.vercel.app/api/getAllUsers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -35,7 +36,7 @@ export default function Home() {
           return res.json();
         })
         .then((users: User[]) => {
-          setUser(users.find((user) => user.tgId == JSON.parse(tg).initDataUnsafe.user.id));
+          setUser(users[0]/*.find((user) => user.tgId == JSON.parse(tg).initDataUnsafe.user.id)*/);
         })
         .catch((error) => console.error(error.message));
   }, []);
