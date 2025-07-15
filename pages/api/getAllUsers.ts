@@ -13,14 +13,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     if (error) {
       return res.status(500).json({ error: error.message });
     }
+    if (!result.length) {
+      return res.status(404).json({ error: "No users found" });
+    }
     return res.status(200).json(
-      result.map((user) => {
-        return {
-          tgId: (user as any).tgId,
-          tgNick: (user as any).tgNick,
-          tgUsername: (user as any).tgUsername,
-        };
-      })
+      result.map((user) => ({
+        tgId: (user as any).tgId,
+        tgNick: (user as any).tgNick,
+        tgUsername: (user as any).tgUsername,
+      }))
     );
   });
 }
+
