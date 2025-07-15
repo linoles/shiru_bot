@@ -20,25 +20,26 @@ export default function Home() {
   const [user, setUser] = useState<User | undefined>(undefined);
 
   useEffect(() => {
-      /*
-      setTg(JSON.stringify(window.Telegram.WebApp));
-      window.Telegram.WebApp.requestFullscreen(); */
-      fetch("https://shiru-bot.vercel.app/api/getAllUsers", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+    const controller = new AbortController();
+    fetch("https://shiru-bot.vercel.app/api/getAllUsers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      signal: controller.signal,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch users");
+        }
+        return res.json();
       })
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("Failed to fetch users");
-          }
-          return res.json();
-        })
-        .then((users: User[]) => {
-          setUser(users[0]/*.find((user) => user.tgId == JSON.parse(tg).initDataUnsafe.user.id)*/);
-        })
-        .catch((error) => console.error(error.message));
+      .then((users: User[]) => {
+        setUser(users[0]/*.find((user) => user.tgId == JSON.parse(tg).initDataUnsafe.user.id)*/);
+      })
+      .catch((error) => console.error(error.message))
+      .finally(() => controller.abort());
+    return () => controller.abort();
   }, []);
   return (
     <div id="root">
