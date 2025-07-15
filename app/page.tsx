@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   let [tg, setTg] = useState("");
-  
+
   useEffect(() => {
     if (window.Telegram.WebApp.requestFullscreen) {
       setTg(JSON.stringify(window.Telegram.WebApp));
@@ -26,7 +26,7 @@ export default function Home() {
       <section aria-label="Notifications alt+T" tabIndex={-1} aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section>
       <div className="min-h-screen bg-background text-foreground dark">
         <div className="flex items-center justify-between p-4 border-b border-border">
-          <div className="flex items-center space-x-2 mt-5">
+          <div className="flex items-center space-x-2 mt-12">
             <h1 className="text-2xl font-extrabold"><span className="text-foreground">SHIRU</span><span className="text-primary ml-1">BOT</span></h1>
             <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
           </div>
