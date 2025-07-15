@@ -11,13 +11,13 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   let [tg, setTg] = useState("");
-  /*
+  
   useEffect(() => {
     if (window.Telegram.WebApp.requestFullscreen) {
       setTg(JSON.stringify(window.Telegram.WebApp));
       window.Telegram.WebApp.requestFullscreen();
     }
-  }) */
+  })
   return (
     <div id="root">
       <div role="region" aria-label="Notifications (F8)" tabIndex={-1} style={{ pointerEvents: "none" }}>
