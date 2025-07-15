@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import db from "../../src/app/db";
+import db from "../../../db";
 
 export interface User {
   tgId: number;
@@ -25,4 +25,3 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     );
   });
 }
-
