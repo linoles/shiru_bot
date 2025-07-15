@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import db from "../db";
+import db from "../../src/app/db";
 
 export interface User {
   tgId: number;

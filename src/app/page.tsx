@@ -12,7 +12,7 @@ export interface User {
   tgUsername: string;
 }
 
-import "@/app/globals.css";
+import "@/src/app/globals.css";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -20,10 +20,9 @@ export default function Home() {
   const [user, setUser] = useState<User | undefined>(undefined);
 
   useEffect(() => {
-    if (window.Telegram.WebApp.requestFullscreen) {
       setTg(JSON.stringify(window.Telegram.WebApp));
       window.Telegram.WebApp.requestFullscreen();
-      fetch("http://shiru-bot.vercel.app/api/getAllUsers", {
+      fetch("/api/getAllUsers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -39,7 +38,6 @@ export default function Home() {
           setUser(users.find((user) => user.tgId == JSON.parse(tg).initDataUnsafe.user.id));
         })
         .catch((error) => console.error(error.message));
-    }
   }, []);
   return (
     <div id="root">
