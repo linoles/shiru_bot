@@ -68,7 +68,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">КНБ</h3>
+                    <h3 className="font-semibold text-foreground neumorph-glow">КНБ</h3>
                     <p className="text-sm text-muted-foreground">Сыграй в КНБ</p>
                   </div>
                 </div>
@@ -110,7 +110,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">Казино</h3>
+                    <h3 className="font-semibold text-foreground neumorph-glow">Казино</h3>
                     <p className="text-sm text-muted-foreground">Рулетка и слоты</p>
                   </div>
                 </div>
@@ -149,7 +149,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">Эмодзи-пазл</h3>
+                    <h3 className="font-semibold text-foreground neumorph-glow">Эмодзи-пазл</h3>
                     <p className="text-sm text-muted-foreground">Собери картинку</p>
                   </div>
                 </div>
@@ -191,7 +191,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">Розыгрыш</h3>
+                    <h3 className="font-semibold text-foreground neumorph-glow">Розыгрыш</h3>
                     <p className="text-sm text-muted-foreground">Испытай удачу</p>
                   </div>
                 </div>
@@ -232,7 +232,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">Сто к одному</h3>
+                    <h3 className="font-semibold text-foreground neumorph-glow">Сто к одному</h3>
                     <p className="text-sm text-muted-foreground">Угадай ответ</p>
                   </div>
                 </div>
