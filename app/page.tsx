@@ -15,6 +15,7 @@ export default function Home() {
   useEffect(() => {
     if (typeof window.Telegram !== "undefined") {
       setTg(JSON.stringify(window.Telegram.WebApp));
+      window.Telegram.WebApp.expand();
     }
   })
   return (

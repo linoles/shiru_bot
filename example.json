@@ -1,0 +1,126 @@
+{
+  "initData": "query_id=AAGUu5M7AwAAAJS7kzt22LdX&user=%7B%22id%22%3A7441988500%2C%22first_name%22%3A%22%D8%9C%D8%9C%F0%9D%96%98%D8%9C%F0%9D%96%8A%D8%9C%F0%9D%96%91%D8%9C%F0%9D%96%94%D8%9C%F0%9D%96%93%D8%9C%F0%9D%96%8E%D8%9C%F0%9D%96%91%22%2C%22last_name%22%3A%22%22%2C%22username%22%3A%22linoles1%22%2C%22language_code%22%3A%22ru%22%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FBvxjGHwOLTG0l8Xkl8GAVqy25WAjEFYezSLrOITjJGL5yy0afJm_1fAJWZu27z.svg%22%7D&auth_date=1752590959&signature=_IMJ82wdW6-4ewlHqWGxb9bpWDbqhkdSYmaXEzEtWi7YpvnVVC7sdBvtQCHzFPnvE-XJX9FP1YIDXHLJSYBVAQ&hash=da24ceb1297b73999a184ca0397ff4d0e1d5b0117ae55537c6013d184e755cd4",
+  "initDataUnsafe": {
+    "query_id": "AAGUu5M7AwAAAJS7kzt22LdX",
+    "user": {
+      "id": 7441988500,
+      "first_name": "؜؜𝖘؜𝖊؜𝖑؜𝖔؜𝖓؜𝖎؜𝖑",
+      "last_name": "",
+      "username": "linoles1",
+      "language_code": "ru",
+      "allows_write_to_pm": true,
+      "photo_url": "https://t.me/i/userpic/320/BvxjGHwOLTG0l8Xkl8GAVqy25WAjEFYezSLrOITjJGL5yy0afJm_1fAJWZu27z.svg"
+    },
+    "auth_date": "1752590959",
+    "signature": "_IMJ82wdW6-4ewlHqWGxb9bpWDbqhkdSYmaXEzEtWi7YpvnVVC7sdBvtQCHzFPnvE-XJX9FP1YIDXHLJSYBVAQ",
+    "hash": "da24ceb1297b73999a184ca0397ff4d0e1d5b0117ae55537c6013d184e755cd4"
+  },
+  "version": "9.0",
+  "platform": "android",
+  "colorScheme": "dark",
+  "themeParams": {
+    "bg_color": "#1e1e1e",
+    "section_bg_color": "#171717",
+    "secondary_bg_color": "#000000",
+    "text_color": "#ffffff",
+    "hint_color": "#7d7d7d",
+    "link_color": "#595959",
+    "button_color": "#5b5b5b",
+    "button_text_color": "#ffffff",
+    "header_bg_color": "#212121",
+    "accent_text_color": "#606060",
+    "section_header_text_color": "#636363",
+    "subtitle_text_color": "#7d7d7d",
+    "destructive_text_color": "#ee686f",
+    "section_separator_color": "#000000",
+    "bottom_bar_bg_color": "#000000"
+  },
+  "isExpanded": false,
+  "viewportHeight": 723.3333,
+  "viewportStableHeight": 723.3333,
+  "safeAreaInset": {
+    "top": 0,
+    "bottom": 0,
+    "left": 0,
+    "right": 0
+  },
+  "contentSafeAreaInset": {
+    "top": 0,
+    "bottom": 0,
+    "left": 0,
+    "right": 0
+  },
+  "isClosingConfirmationEnabled": false,
+  "isVerticalSwipesEnabled": true,
+  "isFullscreen": false,
+  "isOrientationLocked": false,
+  "isActive": true,
+  "headerColor": "#1e1e1e",
+  "backgroundColor": "#1e1e1e",
+  "bottomBarColor": "#000000",
+  "BackButton": {
+    "isVisible": false
+  },
+  "MainButton": {
+    "type": "main",
+    "text": "Continue",
+    "color": "#5b5b5b",
+    "textColor": "#ffffff",
+    "isVisible": false,
+    "isProgressVisible": false,
+    "isActive": true,
+    "hasShineEffect": false
+  },
+  "SecondaryButton": {
+    "type": "secondary",
+    "text": "Cancel",
+    "color": "#000000",
+    "textColor": "#5b5b5b",
+    "isVisible": false,
+    "isProgressVisible": false,
+    "isActive": true,
+    "hasShineEffect": false,
+    "position": "left"
+  },
+  "SettingsButton": {
+    "isVisible": false
+  },
+  "HapticFeedback": {},
+  "CloudStorage": {},
+  "DeviceStorage": {},
+  "SecureStorage": {},
+  "BiometricManager": {
+    "isInited": false,
+    "isBiometricAvailable": false,
+    "biometricType": "unknown",
+    "isAccessRequested": false,
+    "isAccessGranted": false,
+    "isBiometricTokenSaved": false,
+    "deviceId": ""
+  },
+  "Accelerometer": {
+    "isStarted": false,
+    "x": null,
+    "y": null,
+    "z": null
+  },
+  "DeviceOrientation": {
+    "isStarted": false,
+    "absolute": false,
+    "alpha": null,
+    "beta": null,
+    "gamma": null
+  },
+  "Gyroscope": {
+    "isStarted": false,
+    "x": null,
+    "y": null,
+    "z": null
+  },
+  "LocationManager": {
+    "isInited": false,
+    "isLocationAvailable": false,
+    "isAccessRequested": false,
+    "isAccessGranted": false
+  }
+}
