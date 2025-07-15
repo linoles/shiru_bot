@@ -1,27 +1,21 @@
-import type { NextApiRequest, NextApiResponse } from "next";
-import db from "../../../db";
+// src/app/api/getAllUsers/route.ts
+import { NextResponse } from 'next/server';
+import db from '@/src/app/db';
 
-export interface User {
-  tgId: number;
-  tgNick: string;
-  tgUsername: string;
-}
+export async function POST() {
+  try {
+    const users = await new Promise((resolve, reject) => {
+      db.all("SELECT tgId, tgNick, tgUsername FROM users_data", (error, result) => {
+        if (error) reject(error);
+        resolve(result || []);
+      });
+    });
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  console.info('ok');
-  db.all("SELECT tgId, tgNick, tgUsername FROM users_data", (error, result) => {
-    if (error) {
-      return res.status(500).json({ error: error.message });
-    }
-    if (!result.length) {
-      return res.status(404).json({ error: "No users found" });
-    }
-    return res.status(200).json(
-      result.map((user) => ({
-        tgId: (user as any).tgId,
-        tgNick: (user as any).tgNick,
-        tgUsername: (user as any).tgUsername,
-      }))
+    return NextResponse.json(users);
+  } catch (error) {
+    return NextResponse.json(
+      { error: error },
+      { status: 500 }
     );
-  });
+  }
 }

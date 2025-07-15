@@ -20,6 +20,8 @@ export default function Home() {
   const [user, setUser] = useState<User | undefined>(undefined);
 
   useEffect(() => {
+    /* setTg(JSON.stringify(window.Telegram.WebApp));
+    window.Telegram.WebApp.requestFullscreen(); */
     const controller = new AbortController();
     fetch("https://shiru-bot.vercel.app/api/getAllUsers", {
       method: "POST",
