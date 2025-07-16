@@ -5,6 +5,7 @@ import ClientComponent from '@/src/app/users-client'
 export default async function UsersServer() {
   const supabase = await createClient(cookies())
   const { data: users } = await supabase.from('users').select()
+  const { data: games } = await supabase.from('games').select()
   
-  return <ClientComponent initialUsers={users || []} />
+  return <ClientComponent initialUsers={[users || [], games || []]} />
 }
