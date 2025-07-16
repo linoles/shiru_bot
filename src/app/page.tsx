@@ -15,12 +15,24 @@ import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 
 export default async function Home() {
-  /* let tg = JSON.stringify(window.Telegram.WebApp);
-  window.Telegram.WebApp.requestFullscreen(); */
+  let tg = window.Telegram.WebApp;
+  window.Telegram.WebApp.requestFullscreen();
   const supabase = await createClient(cookies());
-  const { data: todos, error } = await supabase.from('users').upsert([{ tgId: 7441988500, tgNick: 'admin', tgUsername: 'admin' }]).select();
+  const { data: todos } = await supabase.from('users').select();
+  if (!todos?.find(todo => todo.tgId === tg.initDataUnsafe.user.id)) {
+    const { data, error } = await supabase
+      .from('users')
+      .insert({
+        tgId: tg.initDataUnsafe.user.id,
+        tgNick: tg.initDataUnsafe.user.first_name || null,
+        tgUsername: tg.initDataUnsafe.user.username || null
+      })
+      .select();
+    if (error) {
+      console.log(error);
+    }
+  }
 
-  console.log(JSON.stringify(todos));
   return (
     <div id="root">
       <ul>
