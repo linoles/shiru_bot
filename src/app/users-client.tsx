@@ -1,4 +1,6 @@
-/*'use client'
+'use client'
+
+import { useEffect, useState } from 'react'
 
 declare global {
   interface Window {
@@ -12,35 +14,47 @@ export interface User {
   tgUsername: string;
 }
 
-import "@/src/app/globals.css";
-import { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
+export default function ClientComponent({ initialUsers }: { initialUsers: User[] }) {
+  const [users, setUsers] = useState<User[]>(initialUsers)
+  const [tgData, setTgData] = useState<any>(null)
 
-export default async function Home() {
-  let tg = await window.Telegram.WebApp;
-  await window.Telegram.WebApp.requestFullscreen();
-  const supabase = await createClient(cookies());
-  const { data: todos } = await supabase.from('users').select();
-  if (!todos?.find(todo => todo.tgId === tg.initDataUnsafe.user.id)) {
-    const { data, error } = await supabase
-      .from('users')
-      .insert({
-        tgId: tg.initDataUnsafe.user.id,
-        tgNick: tg.initDataUnsafe.user.first_name || null,
-        tgUsername: tg.initDataUnsafe.user.username || null
-      })
-      .select();
-    if (error) {
-      console.log(error);
+  useEffect(() => {
+    // Работаем с Telegram WebApp только на клиенте
+    const tg = window.Telegram?.WebApp
+    if (tg) {
+      tg.requestFullscreen()
+      setTgData(tg.initDataUnsafe?.user)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    if (!tgData?.id) return
+    
+    const checkAndAddUser = async () => {
+      const exists = users.some(u => u.tgId === tgData.id)
+      if (!exists) {
+        const response = await fetch('/api/add-user', {
+          method: 'POST',
+          body: JSON.stringify({
+            tgId: tgData.id,
+            tgNick: tgData.first_name,
+            tgUsername: tgData.username
+          })
+        })
+        const newUser = await response.json()
+        setUsers(prev => [...prev, newUser])
+      }
+    }
+
+    checkAndAddUser()
+  }, [tgData, users])
 
   return (
     <div id="root">
       <ul>
-        {todos?.map((todo) => (
-          <li key={`${todo.tgId}`}>
-            {`${todo.tgId} - ${todo.tgNick} - ${todo.tgUsername}`}
+        {users.map((user) => (
+          <li key={user.tgId}>
+            {`${user.tgId} - ${user.tgNick} - ${user.tgUsername}`}
           </li>
         ))}
       </ul>
@@ -291,10 +305,5 @@ export default async function Home() {
         <div className="h-6"></div>
       </div>
     </div>
-  );
+  )
 }
-*/
-
-import UsersServer from './users-server'
-
-export default UsersServer
