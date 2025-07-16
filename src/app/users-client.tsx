@@ -51,13 +51,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
 
   return (
     <div id="root">
-      <ul>
-        {users.map((user) => (
-          <li key={user.tgId}>
-            {`${user.tgId} - ${user.tgNick} - ${user.tgUsername}`}
-          </li>
-        ))}
-      </ul>
       <div role="region" aria-label="Notifications (F8)" tabIndex={-1} style={{ pointerEvents: "none" }}>
         <ol tabIndex={-1} className="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"></ol>
       </div>
@@ -65,7 +58,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       <div className="min-h-screen bg-background text-foreground dark">
         <div className="flex items-center justify-center p-4 border-b border-border">
           <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold"><span className="text-foreground">SHIRU</span><span className="text-primary ml-1">BOT</span></h1>
+            <h1 className="text-2xl font-bold cursor-pointer" onClick={() => alert(`Вход выполнен через: ${tgData?.username ? `@${tgData.username}` : `${tgData?.first_name} (id${tgData?.id})`}`)}>
+              <span className="text-foreground">SHIRU</span>
+              <span className="text-primary ml-1">BOT</span>
+            </h1>
             <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
           </div>
         </div>
