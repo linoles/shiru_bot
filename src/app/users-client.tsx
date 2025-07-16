@@ -58,7 +58,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       <div className="min-h-screen bg-background text-foreground dark">
         <div className="flex items-center justify-center p-4 border-b border-border">
           <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold cursor-pointer" onClick={() => alert(`Вход выполнен через: ${tgData?.username ? `@${tgData.username}` : `${tgData?.first_name} (id${tgData?.id})`}`)}>
+            <h1 className="text-2xl font-bold cursor-pointer" onClick={() => alert(`Вход выполнен через: ${tgData?.username ? `@${tgData.username} (id${tgData?.id})` : `${tgData?.first_name} (id${tgData?.id})`}`)}>
               <span className="text-foreground">SHIRU</span>
               <span className="text-primary ml-1">BOT</span>
             </h1>
