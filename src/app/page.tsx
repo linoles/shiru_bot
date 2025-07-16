@@ -1,8 +1,11 @@
-'use client'
+import "@/src/app/globals.css";
+import { createClient } from '@/utils/supabase/server';
+import { cookies } from 'next/headers';
+import { useEffect } from 'react';
 
 declare global {
   interface Window {
-    Telegram: any
+    Telegram: any;
   }
 }
 
@@ -12,38 +15,34 @@ export interface User {
   tgUsername: string;
 }
 
-import "@/src/app/globals.css";
-import { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
-
-export default async function Home() {
-  let tg = await window.Telegram.WebApp;
-  await window.Telegram.WebApp.requestFullscreen();
-  const supabase = await createClient(cookies());
-  const { data: todos } = await supabase.from('users').select();
-  if (!todos?.find(todo => todo.tgId === tg.initDataUnsafe.user.id)) {
-    const { data, error } = await supabase
-      .from('users')
-      .insert({
-        tgId: tg.initDataUnsafe.user.id,
-        tgNick: tg.initDataUnsafe.user.first_name || null,
-        tgUsername: tg.initDataUnsafe.user.username || null
-      })
-      .select();
-    if (error) {
-      console.log(error);
-    }
-  }
+export default function Page() {
+  useEffect(() => {
+    const fetchData = async () => {
+      if (typeof window !== 'undefined') {
+        const tg = await window.Telegram.WebApp;
+        await window.Telegram.WebApp.requestFullscreen();
+        const supabase = await createClient(cookies());
+        const { data: todos } = await supabase.from('users').select();
+        if (!todos?.find(todo => todo.tgId === tg.initDataUnsafe.user.id)) {
+          const { data, error } = await supabase
+            .from('users')
+            .insert({
+              tgId: tg.initDataUnsafe.user.id,
+              tgNick: tg.initDataUnsafe.user.first_name || null,
+              tgUsername: tg.initDataUnsafe.user.username || null
+            })
+            .select();
+          if (error) {
+            console.log(error);
+          }
+        }
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div id="root">
-      <ul>
-        {todos?.map((todo) => (
-          <li key={`${todo.tgId}`}>
-            {`${todo.tgId} - ${todo.tgNick} - ${todo.tgUsername}`}
-          </li>
-        ))}
-      </ul>
       <div role="region" aria-label="Notifications (F8)" tabIndex={-1} style={{ pointerEvents: "none" }}>
         <ol tabIndex={-1} className="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"></ol>
       </div>
