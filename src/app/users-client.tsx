@@ -12,6 +12,8 @@ export interface User {
   tgId: number;
   tgNick: string;
   tgUsername: string;
+  points: number;
+  lvl: number;
 }
 
 export default function ClientComponent({ initialUsers }: { initialUsers: User[] }) {
@@ -38,7 +40,9 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
           body: JSON.stringify({
             tgId: tgData.id,
             tgNick: tgData.first_name,
-            tgUsername: tgData.username
+            tgUsername: tgData.username,
+            points: 0,
+            lvl: 1
           })
         })
         const newUser = await response.json()
@@ -71,7 +75,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border">
               <div className="p-3 text-center">
-                <div className="text-lg font-bold text-primary">1&nbsp;247</div>
+                <div className="text-lg font-bold text-primary">{users.find(u => u.tgId === tgData?.id)?.points}</div>
                 <div className="text-xs text-muted-foreground">Очки</div>
               </div>
             </div>
