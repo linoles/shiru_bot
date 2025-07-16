@@ -1,3 +1,5 @@
+'use client'
+
 declare global {
   interface Window {
     Telegram: any
@@ -15,8 +17,8 @@ import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 
 export default async function Home() {
-  let tg = window.Telegram.WebApp;
-  window.Telegram.WebApp.requestFullscreen();
+  let tg = await window.Telegram.WebApp;
+  await window.Telegram.WebApp.requestFullscreen();
   const supabase = await createClient(cookies());
   const { data: todos } = await supabase.from('users').select();
   if (!todos?.find(todo => todo.tgId === tg.initDataUnsafe.user.id)) {
