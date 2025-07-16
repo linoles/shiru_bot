@@ -16,13 +16,16 @@ import { cookies } from 'next/headers'
 
 export default async function Home() {
   const supabase = await createClient(cookies());
-  const { data: todos } = await supabase.from('todos').select();
+  const { data: todos } = await supabase.from('users').select();
+
 
   return (
     <div id="root">
       <ul>
         {todos?.map((todo) => (
-          <li>{todo}</li>
+          <li key={`${todo.tgId}`}>
+            {`${todo.tgId} - ${todo.tgNick} - ${todo.tgUsername}`}
+          </li>
         ))}
       </ul>
       <div role="region" aria-label="Notifications (F8)" tabIndex={-1} style={{ pointerEvents: "none" }}>
