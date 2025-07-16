@@ -30,6 +30,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
   useEffect(() => {
     setGames(initialUsers[1]);
   }, [initialUsers]);
+  console.info(initialUsers)
   const [tgData, setTgData] = useState<any>(null);
 
   /*useEffect(() => {
