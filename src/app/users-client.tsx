@@ -25,17 +25,20 @@ export interface Games {
 }
 
 export default function ClientComponent({ initialUsers }: { initialUsers: [User[], Games[]] }) {
-  const [users, setUsers] = useState<User[]>(initialUsers[0])
-  const [games, setGames] = useState<Games[]>(initialUsers[1])
-  const [tgData, setTgData] = useState<any>(null)
-
+  const [users, setUsers] = useState<User[]>(initialUsers[0]);
+  const [games, setGames] = useState<Games[]>([]);
   useEffect(() => {
+    setGames(initialUsers[1]);
+  }, [initialUsers]);
+  const [tgData, setTgData] = useState<any>(null);
+
+  /*useEffect(() => {
     const tg = window.Telegram?.WebApp
     if (tg) {
       tg.requestFullscreen()
       setTgData(tg.initDataUnsafe?.user)
     }
-  }, [])
+  }, [])*/
 
   useEffect(() => {
     if (!tgData?.id) return
@@ -165,7 +168,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                 <div className="flex items-center space-x-2">
                   <div className="text-right">
                     <div className="text-sm text-muted-foreground">Игроков</div>
-                    <div className="font-medium text-primary">games[0].casino.length</div>
+                    <div className="font-medium text-primary">{games[0].casino.length}</div>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
                     <path d="m9 18 6-6-6-6"></path>
@@ -204,7 +207,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                 <div className="flex items-center space-x-2">
                   <div className="text-right">
                     <div className="text-sm text-muted-foreground">Игроков</div>
-                    <div className="font-medium text-primary">games[0].emoji.length</div>
+                    <div className="font-medium text-primary">{games[0].emoji.length}</div>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
                     <path d="m9 18 6-6-6-6"></path>
@@ -246,7 +249,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                 <div className="flex items-center space-x-2">
                   <div className="text-right">
                     <div className="text-sm text-muted-foreground">Игроков</div>
-                    <div className="font-medium text-primary">games[0].distribute.length</div>
+                    <div className="font-medium text-primary">{games[0].distribute.length}</div>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
                     <path d="m9 18 6-6-6-6"></path>
@@ -287,7 +290,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                 <div className="flex items-center space-x-2">
                   <div className="text-right">
                     <div className="text-sm text-muted-foreground">Игроков</div>
-                    <div className="font-medium text-primary">games[0].feud.length</div>
+                    <div className="font-medium text-primary">{games[0].feud.length}</div>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
                     <path d="m9 18 6-6-6-6"></path>
