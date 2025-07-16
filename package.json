@@ -9,11 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/ssr": "^0.6.1",
+    "@supabase/supabase-js": "^2.51.0",
     "fs": "^0.0.1-security",
     "next": "15.3.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sqlite3": "^5.1.7",
+    "supabase": "^2.31.4",
     "vercel": "^44.4.1"
   },
   "devDependencies": {

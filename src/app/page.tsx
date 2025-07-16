@@ -1,5 +1,3 @@
-'use client';
-
 declare global {
   interface Window {
     Telegram: any
@@ -13,39 +11,20 @@ export interface User {
 }
 
 import "@/src/app/globals.css";
-import { useEffect, useState } from "react";
+import { createClient } from '@/utils/supabase/server'
+import { cookies } from 'next/headers'
 
-export default function Home() {
-  let [tg, setTg] = useState("");
-  const [user, setUser] = useState<User | undefined>(undefined);
+export default async function Home() {
+  const supabase = await createClient(cookies());
+  const { data: todos } = await supabase.from('todos').select();
 
-  useEffect(() => {
-    /* setTg(JSON.stringify(window.Telegram.WebApp));
-    window.Telegram.WebApp.requestFullscreen(); */
-    const controller = new AbortController();
-    fetch("https://shiru-bot.vercel.app/api/getAllUsers", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      signal: controller.signal,
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch users");
-        }
-        return res.json();
-      })
-      .then((users: User[]) => {
-        setUser(users[0]/*.find((user) => user.tgId == JSON.parse(tg).initDataUnsafe.user.id)*/);
-      })
-      .catch((error) => console.error(error.message))
-      .finally(() => controller.abort());
-    return () => controller.abort();
-  }, []);
   return (
     <div id="root">
-      <div>{JSON.stringify(user)}</div>
+      <ul>
+        {todos?.map((todo) => (
+          <li>{todo}</li>
+        ))}
+      </ul>
       <div role="region" aria-label="Notifications (F8)" tabIndex={-1} style={{ pointerEvents: "none" }}>
         <ol tabIndex={-1} className="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"></ol>
       </div>
