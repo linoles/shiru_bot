@@ -70,7 +70,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
           </div>
         </div>
         <div className="p-4">
-          <div className="flex items-center justify-between mb-4"><span className="text-sm text-muted-foreground">Общий прогресс</span><span className="text-sm font-medium"><span className="text-destructive">1247</span><span className="text-muted-foreground ml-1">очков</span></span>
+          <div className="flex items-center justify-between mb-4"><span className="text-sm text-muted-foreground">Общий прогресс</span><span className="text-sm font-medium"><span className="text-destructive">{users.find(u => u.tgId === tgData?.id)?.points}</span><span className="text-muted-foreground ml-1">очков</span></span>
           </div>
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border">
@@ -81,13 +81,13 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             </div>
             <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border">
               <div className="p-3 text-center">
-                <div className="text-lg font-bold text-yellow-400">15</div>
+                <div className="text-lg font-bold text-yellow-400">{users.find(u => u.tgId === tgData?.id)?.lvl}</div>
                 <div className="text-xs text-muted-foreground">Уровень</div>
               </div>
             </div>
             <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border">
               <div className="p-3 text-center">
-                <div className="text-lg font-bold text-secondary">#342</div>
+                <div className="text-lg font-bold text-secondary">{users.sort((a, b) => b.points - a.points).findIndex(u => u.tgId === tgData?.id) + 1}</div>
                 <div className="text-xs text-muted-foreground">Рейтинг</div>
               </div>
             </div>
