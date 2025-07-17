@@ -25,10 +25,11 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   const [tgData, setTgData] = useState<any>(null);
 
   useEffect(() => {
-    const tg = window.Telegram?.WebApp
+    const tg = window.Telegram?.WebApp;
     if (tg) {
-      tg.requestFullscreen()
-      setTgData(tg.initDataUnsafe?.user)
+      tg.requestFullscreen();
+      setTgData(tg.initDataUnsafe?.user);
+      tg.BackButton.hide();
     }
   }, [])
 
