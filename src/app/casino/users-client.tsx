@@ -30,6 +30,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       tg.requestFullscreen();
       setTgData(tg.initDataUnsafe?.user);
       tg.BackButton.show();
+      tg.BackButton.onClick(() => location.href = '/');
     }
   }, [])
 
