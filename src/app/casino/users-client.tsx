@@ -34,7 +34,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       const mb = tg.MainButton;
       mb.enable();
       mb.setParams({ text: "Создать игру ➡" });
-      mb.showProgress(true);
+      // mb.showProgress(true);
       mb.onClick(() => alert("HELLO!"));
       mb.show();
     }
