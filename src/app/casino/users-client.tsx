@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import TelegramSlots from './SlotsComponent';
 
 declare global {
   interface Window {
@@ -25,18 +26,22 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   const [tgData, setTgData] = useState<any>(null);
 
   useEffect(() => {
-    const tg = window.Telegram?.WebApp;
-    if (tg) {
-      console.info(tg)
-      setTgData(tg.initDataUnsafe?.user);
-      tg.BackButton.onClick(() => location.href = '/');
-      tg.BackButton.show();
-      const mb = tg.MainButton;
-      mb.enable();
-      mb.setParams({ text: "Создать игру ➡" });
-      // mb.showProgress(true);
-      mb.onClick(() => alert("HELLO!"));
-      mb.show();
+    try {
+      const tg = window.Telegram?.WebApp;
+      if (tg) {
+        console.info(tg)
+        setTgData(tg.initDataUnsafe?.user);
+        tg.BackButton.onClick(() => location.href = '/');
+        tg.BackButton.show();
+        const mb = tg.MainButton;
+        mb.enable();
+        mb.setParams({ text: "Бесплатная игра" });
+        // mb.showProgress(true);
+        mb.onClick(() => location.href = "/casino/free");
+        mb.show();
+      }
+    } catch (error) {
+      console.error(error)
     }
   }, [])
 
@@ -104,6 +109,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             </div>
           </div>
           <h2 className="text-lg font-bold mb-4 text-muted-foreground">КАЗИНО</h2>
+          <TelegramSlots />
         </div>
       </div>
     </div>
