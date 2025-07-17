@@ -29,13 +29,13 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     if (tg) {
       tg.requestFullscreen();
       setTgData(tg.initDataUnsafe?.user);
-      tg.BackButton.show();
       tg.BackButton.onClick(() => location.href = '/');
+      tg.BackButton.show();
+      tg.BottomButton.setParams({ text: "Создать игру ➡" });
       tg.BottomButton.enable();
-      tg.BottomButton.show();
       tg.BottomButton.showProgress(true);
       tg.BottomButton.onClick(() => alert("HELLO!"));
-      tg.BottomButton.setParams({ text: "Создать игру ➡", has_shine_effect: true });
+      tg.BottomButton.show();
     }
   }, [])
 
