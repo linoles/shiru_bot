@@ -8,29 +8,20 @@ declare global {
   }
 }
 
+export interface Points_from {
+  [key: string]: number;
+}
 export interface User {
   tgId: number;
   tgNick: string;
   tgUsername: string;
   points: number;
   lvl: number;
-}
-export interface Games {
-  num: number;
-  rsp: number[];
-  casino: number[];
-  emoji: number[];
-  distribute: number[];
-  feud: number[];
+  points_from: Points_from;
 }
 
-export default function ClientComponent({ initialUsers }: { initialUsers: [User[], Games[]] }) {
-  const [users, setUsers] = useState<User[]>(initialUsers[0]);
-  const [games, setGames] = useState<Games[]>([]);
-  useEffect(() => {
-    setGames(initialUsers[1]);
-  }, [initialUsers]);
-  console.info(initialUsers)
+export default function ClientComponent({ initialUsers }: { initialUsers: User[] }) {
+  const [users, setUsers] = useState<User[]>(initialUsers);
   const [tgData, setTgData] = useState<any>(null);
 
   /*useEffect(() => {
@@ -127,7 +118,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                 <div className="flex items-center space-x-2">
                   <div className="text-right">
                     <div className="text-sm text-muted-foreground">Игроков</div>
-                    <div className="font-medium text-primary">{games[0].rsp.length}</div>
+                    <div className="font-medium text-primary">∞</div>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
                     <path d="m9 18 6-6-6-6"></path>
@@ -145,7 +136,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                     <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
                   </svg>
                 </div>
-                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">342</div>
+                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">{users.find(u => u.tgId === tgData?.id)?.points_from.rsp}</div>
               </div>
             </div>
           </div>
@@ -169,7 +160,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                 <div className="flex items-center space-x-2">
                   <div className="text-right">
                     <div className="text-sm text-muted-foreground">Игроков</div>
-                    <div className="font-medium text-primary">{games[0].casino.length}</div>
+                    <div className="font-medium text-primary">∞</div>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
                     <path d="m9 18 6-6-6-6"></path>
@@ -187,7 +178,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                     <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
                   </svg>
                 </div>
-                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">128</div>
+                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">{users.find(u => u.tgId === tgData?.id)?.points_from.casino}</div>
               </div>
             </div>
           </div>
@@ -208,7 +199,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                 <div className="flex items-center space-x-2">
                   <div className="text-right">
                     <div className="text-sm text-muted-foreground">Игроков</div>
-                    <div className="font-medium text-primary">{games[0].emoji.length}</div>
+                    <div className="font-medium text-primary">∞</div>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
                     <path d="m9 18 6-6-6-6"></path>
@@ -226,7 +217,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                     <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
                   </svg>
                 </div>
-                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">95</div>
+                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">{users.find(u => u.tgId === tgData?.id)?.points_from.emoji}</div>
               </div>
             </div>
           </div>
@@ -250,7 +241,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                 <div className="flex items-center space-x-2">
                   <div className="text-right">
                     <div className="text-sm text-muted-foreground">Игроков</div>
-                    <div className="font-medium text-primary">{games[0].distribute.length}</div>
+                    <div className="font-medium text-primary">∞</div>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
                     <path d="m9 18 6-6-6-6"></path>
@@ -268,7 +259,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                     <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
                   </svg>
                 </div>
-                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">567</div>
+                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">{users.find(u => u.tgId === tgData?.id)?.points_from.distribute}</div>
               </div>
             </div>
           </div>
@@ -291,7 +282,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                 <div className="flex items-center space-x-2">
                   <div className="text-right">
                     <div className="text-sm text-muted-foreground">Игроков</div>
-                    <div className="font-medium text-primary">{games[0].feud.length}</div>
+                    <div className="font-medium text-primary">∞</div>
                   </div>
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-right text-muted-foreground">
                     <path d="m9 18 6-6-6-6"></path>
@@ -309,7 +300,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: [User[
                     <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
                   </svg>
                 </div>
-                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">89</div>
+                <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">{users.find(u => u.tgId === tgData?.id)?.points_from.feud}</div>
               </div>
             </div>
           </div>
