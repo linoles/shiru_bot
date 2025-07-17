@@ -27,15 +27,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
     if (tg) {
-      tg.requestFullscreen();
+      console.info(tg)
       setTgData(tg.initDataUnsafe?.user);
       tg.BackButton.onClick(() => location.href = '/');
       tg.BackButton.show();
-      tg.BottomButton.setParams({ text: "Создать игру ➡" });
-      tg.BottomButton.enable();
-      tg.BottomButton.showProgress(true);
-      tg.BottomButton.onClick(() => alert("HELLO!"));
-      tg.BottomButton.show();
     }
   }, [])
 
