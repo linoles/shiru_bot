@@ -29,7 +29,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     if (tg) {
       tg.requestFullscreen();
       setTgData(tg.initDataUnsafe?.user);
-      tg.backButton.show();
+      tg.BackButton.show();
     }
   }, [])
 
