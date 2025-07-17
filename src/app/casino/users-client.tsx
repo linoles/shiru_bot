@@ -25,16 +25,17 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   const [tgData, setTgData] = useState<any>(null);
 
   useEffect(() => {
-    const tg = window.Telegram?.WebApp
+    const tg = window.Telegram?.WebApp;
     if (tg) {
-      tg.requestFullscreen()
-      setTgData(tg.initDataUnsafe?.user)
+      tg.requestFullscreen();
+      setTgData(tg.initDataUnsafe?.user);
+      tg.backButton.show();
     }
   }, [])
 
   useEffect(() => {
     if (!tgData?.id) return
-    
+
     const checkAndAddUser = async () => {
       const exists = users.some(u => u.tgId === tgData.id)
       if (!exists) {
