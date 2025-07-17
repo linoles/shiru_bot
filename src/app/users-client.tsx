@@ -34,7 +34,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
 
   useEffect(() => {
     if (!tgData?.id) return
-    
+
     const checkAndAddUser = async () => {
       const exists = users.some(u => u.tgId === tgData.id)
       if (!exists) {
@@ -66,10 +66,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         <div className="flex items-center justify-center p-4 border-b border-border">
           <div className="flex items-center space-x-2">
             <h1 className="text-2xl font-bold cursor-pointer" onClick={() => alert(`Вход выполнен через: ${tgData?.username ? `@${tgData.username} (id${tgData?.id})` : `${tgData?.first_name} (id${tgData?.id})`}`)}>
-              <span className="text-foreground">SHIRU</span>
-              <span className="text-primary ml-1">BOT</span>
+              <span className="text-foreground neumorph-glow">SHIRU</span>
+              <span className="text-primary ml-1 green-neumorph-glow">BOT</span>
             </h1>
-            <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+            <div className="w-2 h-2 bg-primary rounded-full animate-pulse green-neumorph-glow"></div>
           </div>
         </div>
         <div className="p-4">
@@ -95,9 +95,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               </div>
             </div>
           </div>
-          <h2 className="text-lg font-bold mb-4 text-muted-foreground">Выбери игру</h2></div>
+          <h2 className="text-lg font-bold mb-4 text-muted-foreground">ВЫБЕРИ ИГРУ</h2>
+        </div>
         <div className="px-4 space-y-3">
-          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer">
+          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => location.href = "/rsp"}>
             <div className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
@@ -140,7 +141,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               </div>
             </div>
           </div>
-          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer">
+          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => location.href = "/casino"}>
             <div className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
@@ -182,7 +183,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               </div>
             </div>
           </div>
-          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer">
+          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => location.href = "/emoji"}>
             <div className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
@@ -221,7 +222,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               </div>
             </div>
           </div>
-          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer">
+          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => location.href = "/distribute"}>
             <div className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
@@ -263,7 +264,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               </div>
             </div>
           </div>
-          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer">
+          <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => location.href = "/feud"}>
             <div className="p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
