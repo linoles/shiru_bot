@@ -111,6 +111,39 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         // mb.showProgress(true);
         mb.onClick(() => location.href = "/casino/free");
         mb.show();
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  }, [])
+
+  const tg = window.Telegram?.WebApp;
+  useEffect(() => {
+    if (!tgData?.id) return
+
+    const checkAndAddUser = async () => {
+      const exists = users.some(u => u.tgId === tgData.id)
+      if (!exists) {
+        const response = await fetch('/api/add-user', {
+          method: 'POST',
+          body: JSON.stringify({
+            tgId: tgData.id,
+            tgNick: tgData.first_name,
+            tgUsername: tgData.username,
+            points: 0,
+            lvl: 1,
+            points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 }
+          })
+        })
+        const newUser = await response.json()
+        setUsers(prev => [...prev, newUser])
+        setCurUser(newUser);
+      } else {
+        const foundUser = users.find(u => u.tgId === tgData?.id);
+        if (foundUser) {
+          setCurUser(foundUser);
+        }
+      }
         const sb = tg.SecondaryButton;
         sb.enable();
         sb.setParams({ text: "Крутить ($100 очков)" });
@@ -168,42 +201,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
           }
         });
         sb.show();
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!tgData?.id) return
-
-    const checkAndAddUser = async () => {
-      const exists = users.some(u => u.tgId === tgData.id)
-      if (!exists) {
-        const response = await fetch('/api/add-user', {
-          method: 'POST',
-          body: JSON.stringify({
-            tgId: tgData.id,
-            tgNick: tgData.first_name,
-            tgUsername: tgData.username,
-            points: 0,
-            lvl: 1,
-            points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 }
-          })
-        })
-        const newUser = await response.json()
-        setUsers(prev => [...prev, newUser])
-        setCurUser(newUser);
-      } else {
-        const foundUser = users.find(u => u.tgId === tgData?.id);
-        if (foundUser) {
-          setCurUser(foundUser);
-        }
-      }
     }
 
     checkAndAddUser()
-  }, [tgData, users])
+  }, [tgData, users, tg])
 
   const rollSlots = async () => {
     try {
