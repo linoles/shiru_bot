@@ -219,8 +219,14 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     }
                     const response = await fetch('/api/save-user', {
                       method: 'POST',
-                      body: JSON.stringify(tgData)
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      body: JSON.stringify(tgData),
                     });
+                    if (!response.ok) {
+                      throw new Error(`${response.status} ${response.statusText}`);
+                    }
                   } catch (e) {
                     console.error(e);
                   }
