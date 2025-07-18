@@ -101,7 +101,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     try {
       const tg = window.Telegram?.WebApp;
       if (tg) {
-        console.info(tg)
         setTgData(tg.initDataUnsafe?.user);
         tg.BackButton.onClick(() => location.href = '/');
         tg.BackButton.show();
@@ -116,8 +115,8 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         sb.setParams({ text: "Крутить ($100 очков)" });
         sb.onClick(async () => {
           try {
-            console.info(users);
-            const curUser = users.find(u => u.tgId === tgData.id);
+            const curUser = users.find(u => u.tgId === window.Telegram?.WebApp.initDataUnsafe?.user.id);
+            console.info(users, curUser);
             if (curUser === undefined || curUser.points === undefined || curUser.points < 100) {
               alert("Недостаточно очков!");
               return;
