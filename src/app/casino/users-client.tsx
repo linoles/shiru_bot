@@ -115,11 +115,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         sb.setParams({ text: "Крутить ($100 очков)" });
         sb.onClick(async () => {
           try {
-            const curUser = users.find(u => u.tgId === window.Telegram?.WebApp.initDataUnsafe?.user.id);
-            if (curUser === undefined || curUser.points === undefined || curUser.points < 100) {
-              alert("Недостаточно очков!");
-              return;
-            }
+            setRes("...");
+            setResColor("stone");
+            setInt(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.svg`} className="w-[60%]"></img></div>)))
+            await new Promise(resolve => setTimeout(resolve, 1000));
             const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
             setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.svg`} className="w-[60%]"></img></div>)))
             const payoutKey = newRandChoices.join('')
