@@ -266,15 +266,13 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               <div className={`font-semibold text-xl py-0.5 inline-flex items-center rounded-full border px-2.5 mt-2 mr-2 transition-colors focus:outline-none focus:ring-2 focus:ring-${resColor} focus:ring-offset-2 hover:bg-${resColor}/80 bg-${resColor}/10 text-${resColor} border-${resColor}/20`}>{res}</div>
             </div>
             <h3 className="text-lg font-bold text-muted-foreground">СТАВКА</h3>
-            <div className="w-screen flex items-center justify-center mx-4">
-              <div className="bg-card rounded-xl border-primary">
-                <div className="shadow-sm p-3 text-center">{Math.floor(curUser.points / 3)}</div>
-                <div className="shadow-sm p-3 text-center">{Math.floor(curUser.points / 2)}</div>
-                <div className="shadow-sm p-3 text-center">{Math.floor(curUser.points)}</div>
-              </div>
-              <div>
-                <input type="text" className="bg-card rounded-xl border-primary shadow-sm p-3 text-center" />
-              </div>
+            <div className="w-screen flex items-center justify-center mx-4 flex-col">
+              <div className="shadow-sm p-3 text-center bg-card rounded-xl border-primary">{Math.floor(curUser.points / 3)}</div>
+              <div className="shadow-sm p-3 text-center bg-card rounded-xl border-primary">{Math.floor(curUser.points / 2)}</div>
+              <div className="shadow-sm p-3 text-center bg-card rounded-xl border-primary">{Math.floor(curUser.points)}</div>
+            </div>
+            <div>
+              <input type="text" className="bg-card rounded-xl border-primary shadow-sm p-3 text-center" />
             </div>
           </div>
         </div>
