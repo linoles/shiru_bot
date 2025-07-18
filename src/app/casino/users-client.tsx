@@ -121,7 +121,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               return;
             }
             const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
-            setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}>{choice}</div>)))
+            setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.svg`} className="w-[100%]"></img></div>)))
             const payoutKey = newRandChoices.join('')
             const payout = payouts[payoutKey] || 0
             if (payout <= 16) {
