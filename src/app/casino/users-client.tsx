@@ -256,7 +256,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                 {int}
               </div>
             </div>
-            <div className="w-screen flex items-end justify-center mb-2">
+            <div className="w-screen flex items-end justify-end mb-2">
               <div className="font-semibold text-xl py-0.5 inline-flex items-center rounded-full border px-2.5 mt-2 mr-2 transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 hover:bg-secondary/80 bg-destructive/10 text-destructive border-destructive/20">{res}</div>
             </div>
           </div>
