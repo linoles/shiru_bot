@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import TelegramSlots from './SlotsComponent';
 
 declare global {
   interface Window {
@@ -24,6 +23,77 @@ export interface User {
 export default function ClientComponent({ initialUsers }: { initialUsers: User[] }) {
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [tgData, setTgData] = useState<any>(null);
+
+  const symbols = ['🍇', '🍋', 'BAR', '7️⃣'];
+  const rand_choices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
+  const payouts: { [key: string]: number } = {
+    "7️⃣7️⃣7️⃣": 64,
+    "🍋🍋🍋": 43,
+    "🍇🍇🍇": 22,
+    "BARBARBAR": 1,
+    "7️⃣7️⃣BAR": 16,
+    "7️⃣7️⃣🍇": 32,
+    "7️⃣7️⃣🍋": 48,
+    "🍋🍋7️⃣": 59,
+    "BAR🍇7️⃣": 53,
+    "🍇🍋7️⃣": 58,
+    "🍇🍋🍋": 42,
+    "7️⃣🍋7️⃣": 60,
+    "🍋🍇🍇": 23,
+    "🍇BARBAR": 2,
+    "BAR🍇🍋": 37,
+    "7️⃣🍇🍋": 40,
+    "🍇7️⃣BAR": 14,
+    "7️⃣🍋🍇": 28,
+    "BARBAR🍋": 33,
+    "🍋🍋BAR": 11,
+    "BAR🍇🍇": 21,
+    "🍇7️⃣7️⃣": 62,
+    "BAR🍋BAR": 9,
+    "🍇BAR7️⃣": 50,
+    "🍋BAR🍋": 35,
+    "7️⃣🍇7️⃣": 56,
+    "🍋🍇7️⃣": 55,
+    "7️⃣🍇🍇": 24,
+    "🍋BAR7️⃣": 51,
+    "🍇🍋🍇": 26,
+    "7️⃣🍋🍋": 44,
+    "🍋BARBAR": 3,
+    "BARBAR7️⃣": 49,
+    "BAR7️⃣BAR": 13,
+    "BAR🍋7️⃣": 57,
+    "🍋7️⃣🍇": 31,
+    "🍋🍋🍇": 27,
+    "🍇BAR🍋": 34,
+    "🍇7️⃣🍋": 46,
+    "BAR7️⃣🍇": 29,
+    "7️⃣🍇BAR": 8,
+    "🍇🍇BAR": 6,
+    "BAR🍇BAR": 5,
+    "BAR7️⃣7️⃣": 61,
+    "🍇🍇7️⃣": 54,
+    "🍇7️⃣🍇": 30,
+    "🍋7️⃣BAR": 15,
+    "BAR7️⃣🍋": 45,
+    "🍋7️⃣🍋": 47,
+    "🍋7️⃣7️⃣": 63,
+    "🍇🍋BAR": 10,
+    "7️⃣🍋BAR": 12,
+    "7️⃣BAR🍋": 36,
+    "🍋🍇BAR": 7,
+    "BAR🍋🍋": 41,
+    "BARBAR🍇": 17,
+    "7️⃣BARBAR": 4,
+    "🍇🍇🍋": 38,
+    "🍋BAR🍇": 19,
+    "🍋🍇🍋": 39,
+    "7️⃣BAR7️⃣": 52,
+    "7️⃣BAR🍇": 20,
+    "🍇BAR🍇": 18
+  }
+
+  let [res, setRes] = useState("Начните играть! 🎰");
+  let [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl pb-3 flex items-center justify-center ${choice}`}>{choice}</div>)))
 
   useEffect(() => {
     try {
@@ -108,8 +178,63 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               </div>
             </div>
           </div>
-          <h2 className="text-lg font-bold mb-4 text-muted-foreground">КАЗИНО</h2>
-          <TelegramSlots />
+          <h2 className="text-lg font-bold text-muted-foreground">КАЗИНО</h2>
+          <div className="w-full max-w-xs mx-auto p-4 flex flex-col items-center justify-center">
+            <div className="w-screen bg-card flex items-center justify-center mb-2">
+              <div className="font-bold text-xl py-2">{res}</div>
+            </div>
+            <div className="flex flex-col items-center w-screen px-3">
+              <div className="flex w-full mx-4 space-x-3">
+                {int}
+              </div>
+              <span
+                className="rounded-3xl bg-card text-white p-2 mt-2 cursor-pointer w-full mx-4 text-center font-bold text-[2rem] h-[15vw]"
+                onClick={() => {
+                  try {
+                    if (tgData.points < 100) {
+                      alert("Недостаточно очков!");
+                      return;
+                    }
+                    const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
+                    setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl pb-3 flex items-center justify-center ${choice}`}>{choice}</div>)))
+                    const payoutKey = newRandChoices.join('')
+                    const payout = payouts[payoutKey] || 0
+                    if (payout <= 16) {
+                      setRes("Вы проиграли всё! 😳");
+                      tgData.points -= 100;
+                    } else if (payout >= 17 && payout < 32) {
+                      setRes(`Вам вернулось x0.5 вашей ставки! 💩`);
+                      tgData.points -= 50;
+                    } else if (payout == 32) {
+                      setRes("Вы сохранили свою ставку! 😐");
+                    } else if (payout >= 33 && payout <= 48) {
+                      setRes("Вам вернулось x1.5 вашей ставки! 😎");
+                      tgData.points += 50;
+                    } else if (payout >= 49 && payout < 64) {
+                      setRes("Вам вернулось x2 вашей ставки! 🎉");
+                      tgData.points += 100;
+                    } else {
+                      setRes("Вам вернулось x3 вашей ставки! 🎉🤡🎉");
+                      tgData.points += 200;
+                    }
+                    useEffect(() => {
+                      const saveUser = async () => {
+                        const response = await fetch('/api/save-user', {
+                          method: 'POST',
+                          body: JSON.stringify(tgData)
+                        });
+                      };
+                      saveUser();
+                    });
+                  } catch (e) {
+                    console.error(e);
+                  }
+                }}
+              >
+                $100 очков
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
