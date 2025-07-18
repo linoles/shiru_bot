@@ -116,7 +116,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         sb.onClick(async () => {
           try {
             const curUser = users.find(u => u.tgId === window.Telegram?.WebApp.initDataUnsafe?.user.id);
-            console.info(users, curUser);
             if (curUser === undefined || curUser.points === undefined || curUser.points < 100) {
               alert("Недостаточно очков!");
               return;
@@ -308,12 +307,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               <div className="flex w-full mx-4 space-x-3">
                 {int}
               </div>
-              <span
-                className="rounded-3xl bg-card text-white p-2 mt-2 cursor-pointer w-full mx-4 text-center font-bold text-[2rem] h-[15vw]"
-                onClick={rollSlots}
-              >
-                $100 очков
-              </span>
             </div>
           </div>
         </div>
