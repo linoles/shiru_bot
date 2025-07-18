@@ -22,6 +22,7 @@ export interface User {
 
 export default function ClientComponent({ initialUsers }: { initialUsers: User[] }) {
   const [users, setUsers] = useState<User[]>(initialUsers);
+  const [curUser, setCurUser] = useState<User>({ tgId: 0, tgNick: '', tgUsername: '', points: 0, lvl: 1, points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 } });
   const [tgData, setTgData] = useState<any>(null);
 
   const symbols = ['🍇', '🍋', 'BAR', '7️⃣'];
@@ -134,6 +135,12 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         })
         const newUser = await response.json()
         setUsers(prev => [...prev, newUser])
+        setCurUser(newUser);
+      } else {
+        const foundUser = users.find(u => u.tgId === tgData?.id);
+        if (foundUser) {
+          setCurUser(foundUser);
+        }
       }
     }
 
@@ -157,7 +164,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
           </div>
         </div>
         <div className="p-4">
-          <div className="flex items-center justify-between mb-4"><span className="text-sm text-muted-foreground">Общий прогресс</span><span className="text-sm font-medium"><span className="text-destructive">{users.find(u => u.tgId === tgData?.id)?.points}</span><span className="text-muted-foreground ml-1">очков</span></span>
+          <div className="flex items-center justify-between mb-4"><span className="text-sm text-muted-foreground">Общий прогресс</span><span className="text-sm font-medium"><span className="text-destructive">{curUser?.points}</span><span className="text-muted-foreground ml-1">очков</span></span>
           </div>
           <div className="grid grid-cols-3 gap-4 mb-6">
             <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border">
@@ -168,7 +175,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             </div>
             <div className="rounded-lg border text-card-foreground shadow-sm bg-card border-border">
               <div className="p-3 text-center">
-                <div className="text-lg font-bold text-yellow-400">{users.find(u => u.tgId === tgData?.id)?.lvl}</div>
+                <div className="text-lg font-bold text-yellow-400">{curUser?.lvl}</div>
                 <div className="text-xs text-muted-foreground">Уровень</div>
               </div>
             </div>
@@ -192,7 +199,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                 className="rounded-3xl bg-card text-white p-2 mt-2 cursor-pointer w-full mx-4 text-center font-bold text-[2rem] h-[15vw]"
                 onClick={async () => {
                   try {
-                    if (tgData.points < 100) {
+                    if (curUser.points < 100) {
                       alert("Недостаточно очков!");
                       return;
                     }
@@ -202,29 +209,28 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     const payout = payouts[payoutKey] || 0
                     if (payout <= 16) {
                       setRes("Вы проиграли всё! 😳");
-                      tgData.points -= 100;
+                      curUser.points -= 100;
                     } else if (payout >= 17 && payout < 32) {
                       setRes(`Вам вернулось x0.5 вашей ставки! 💩`);
-                      tgData.points -= 50;
+                      curUser.points -= 50;
                     } else if (payout == 32) {
                       setRes("Вы сохранили свою ставку! 😐");
                     } else if (payout >= 33 && payout <= 48) {
                       setRes("Вам вернулось x1.5 вашей ставки! 😎");
-                      tgData.points += 50;
+                      curUser.points += 50;
                     } else if (payout >= 49 && payout < 64) {
                       setRes("Вам вернулось x2 вашей ставки! 🎉");
-                      tgData.points += 100;
+                      curUser.points += 100;
                     } else {
                       setRes("Вам вернулось x3 вашей ставки! 🎉🤡🎉");
-                      tgData.points += 200;
+                      curUser.points += 200;
                     }
-                    console.info(tgData)
                     const response = await fetch('/api/save-user', {
                       method: 'POST',
                       headers: {
                         'Content-Type': 'application/json',
                       },
-                      body: JSON.stringify(tgData),
+                      body: JSON.stringify(curUser),
                     })
 
                     if (!response.ok) {
