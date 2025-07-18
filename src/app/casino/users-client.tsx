@@ -128,7 +128,8 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             tgNick: tgData.first_name,
             tgUsername: tgData.username,
             points: 0,
-            lvl: 1
+            lvl: 1,
+            points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 }
           })
         })
         const newUser = await response.json()
@@ -217,16 +218,22 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                       setRes("Вам вернулось x3 вашей ставки! 🎉🤡🎉");
                       tgData.points += 200;
                     }
+                    console.info(tgData)
                     const response = await fetch('/api/save-user', {
                       method: 'POST',
                       headers: {
                         'Content-Type': 'application/json',
                       },
                       body: JSON.stringify(tgData),
-                    });
+                    })
+
                     if (!response.ok) {
-                      throw new Error(`${response.status} ${response.statusText}`);
+                      const errorData = await response.json()
+                      throw new Error(errorData.error || "Ошибка сервера")
                     }
+
+                    const result = await response.json()
+                    console.log("Успешно:", result)
                   } catch (e) {
                     console.error(e);
                   }
