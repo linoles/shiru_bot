@@ -117,8 +117,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
           try {
             setRes("...");
             setResColor("stone");
+            sb.showProgress(true);
             setInt(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.svg`} className="w-[60%]"></img></div>)))
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise(resolve => setTimeout(resolve, 5000));
+            sb.showProgress(false);
             const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
             setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.svg`} className="w-[60%]"></img></div>)))
             const payoutKey = newRandChoices.join('')
