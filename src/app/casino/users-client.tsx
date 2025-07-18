@@ -93,7 +93,8 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     "🍇BAR🍇": 18
   }
 
-  let [res, setRes] = useState("Начните играть! 🎰");
+  let [res, setRes] = useState("");
+  let [resColor, setResColor] = useState("stone");
   let [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}>{choice}</div>)))
 
   useEffect(() => {
@@ -110,6 +111,11 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         // mb.showProgress(true);
         mb.onClick(() => location.href = "/casino/free");
         mb.show();
+        const sb = tg.SecondaryButton;
+        sb.enable();
+        sb.setParams({ text: "Крутить ($100 очков)" });
+        sb.onClick(rollSlots);
+        sb.show();
       }
     } catch (error) {
       console.error(error)
@@ -146,6 +152,60 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
 
     checkAndAddUser()
   }, [tgData, users])
+
+  const rollSlots = async () => {
+    try {
+      if (curUser.points < 100) {
+        alert("Недостаточно очков!");
+        return;
+      }
+      const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
+      setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}>{choice}</div>)))
+      const payoutKey = newRandChoices.join('')
+      const payout = payouts[payoutKey] || 0
+      if (payout <= 16) {
+        setRes("x0 (-100$)");
+        setResColor("red");
+        curUser.points -= 100;
+      } else if (payout >= 17 && payout < 32) {
+        setRes(`x0.5 (-50$)`);
+        setResColor("red");
+        curUser.points -= 50;
+      } else if (payout == 32) {
+        setRes("x1 (=0$)");
+        setResColor("stone");
+      } else if (payout >= 33 && payout <= 48) {
+        setRes("x1.5 (+50$)");
+        setResColor("green");
+        curUser.points += 50;
+      } else if (payout >= 49 && payout < 64) {
+        setRes("x2 (+100$)");
+        setResColor("green");
+        curUser.points += 100;
+      } else {
+        setRes("х3 (+200$)");
+        setResColor("green");
+        curUser.points += 200;
+      }
+      const response = await fetch('/api/save-user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(curUser),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Ошибка сервера")
+      }
+
+      const result = await response.json()
+      console.log("Успешно:", result)
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   return (
     <div id="root">
@@ -187,84 +247,21 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             </div>
           </div>
           <h2 className="text-lg font-bold text-muted-foreground">КАЗИНО</h2>
-          <div className="w-full max-w-md mx-auto p-4 bg-gradient-to-b from-gray-50 to-white rounded-3xl shadow-lg">
-            {/* Сообщение о выигрыше */}
-            <div className="mb-6 text-center">
-              <h2 className="text-2xl font-bold text-gray-800 mb-1">КАЗИНО</h2>
-              <div className="bg-indigo-100 border-l-4 border-indigo-500 text-indigo-700 p-3 rounded-lg">
-                <p className="font-bold text-lg">{res}</p>
+          <div className="w-full max-w-xs mx-auto p-4 flex flex-col items-center justify-center">
+            <div className="w-screen bg-card flex items-center justify-center mb-2">
+              <div className="font-bold text-xl py-2">{res}</div>
+            </div>
+            <div className="flex flex-col items-center w-screen px-3">
+              <div className="flex w-full mx-4 space-x-3">
+                {int}
               </div>
+              <span
+                className="rounded-3xl bg-card text-white p-2 mt-2 cursor-pointer w-full mx-4 text-center font-bold text-[2rem] h-[15vw]"
+                onClick={rollSlots}
+              >
+                $100 очков
+              </span>
             </div>
-
-            {/* Слот-машина */}
-            <div className="flex justify-between space-x-3 mb-6">
-              {int}
-            </div>
-
-            {/* Кнопка ставки */}
-            <button
-              className="w-full py-4 px-6 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold text-xl rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-95"
-              onClick={async () => {
-                try {
-                  if (curUser.points < 100) {
-                    alert("Недостаточно очков!");
-                    return;
-                  }
-                  const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
-                  setInt(newRandChoices.map((choice, index) => (
-                    <div
-                      key={index}
-                      className={`flex items-center justify-center h-20 w-full bg-white rounded-xl shadow-md text-4xl ${choice}`}
-                    >
-                      {choice}
-                    </div>
-                  )))
-
-                  // Остальная логика остается без изменений...
-                  const payoutKey = newRandChoices.join('')
-                  const payout = payouts[payoutKey] || 0
-
-                  if (payout <= 16) {
-                    setRes("Вы проиграли всё! 😳");
-                    curUser.points -= 100;
-                  } else if (payout >= 17 && payout < 32) {
-                    setRes(`Вам вернулось x0.5 вашей ставки! 💩`);
-                    curUser.points -= 50;
-                  } else if (payout == 32) {
-                    setRes("Вы сохранили свою ставку! 😐");
-                  } else if (payout >= 33 && payout <= 48) {
-                    setRes("Вам вернулось x1.5 вашей ставки! 😎");
-                    curUser.points += 50;
-                  } else if (payout >= 49 && payout < 64) {
-                    setRes("Вам вернулось x2 вашей ставки! 🎉");
-                    curUser.points += 100;
-                  } else {
-                    setRes("Вам вернулось x3 вашей ставки! 🎉🤡🎉");
-                    curUser.points += 200;
-                  }
-
-                  const response = await fetch('/api/save-user', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(curUser),
-                  })
-
-                  if (!response.ok) {
-                    const errorData = await response.json()
-                    throw new Error(errorData.error || "Ошибка сервера")
-                  }
-
-                  const result = await response.json()
-                  console.log("Успешно:", result)
-                } catch (e) {
-                  console.error(e);
-                }
-              }}
-            >
-              Сделать ставку — $100 очков
-            </button>
           </div>
         </div>
       </div>
