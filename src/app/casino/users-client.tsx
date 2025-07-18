@@ -116,7 +116,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         sb.setParams({ text: "Крутить ($100 очков)" });
         sb.onClick(async () => {
           try {
-            console.info(users.some(u => u.tgId === tgData.id));
+            console.info(users);
             const curUser = users.find(u => u.tgId === tgData.id);
             if (curUser === undefined || curUser.points === undefined || curUser.points < 100) {
               alert("Недостаточно очков!");
