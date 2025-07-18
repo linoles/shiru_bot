@@ -93,7 +93,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   }
 
   let [res, setRes] = useState("Начните играть! 🎰");
-  let [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl pb-3 flex items-center justify-center ${choice}`}>{choice}</div>)))
+  let [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}>{choice}</div>)))
 
   useEffect(() => {
     try {
@@ -189,14 +189,14 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               </div>
               <span
                 className="rounded-3xl bg-card text-white p-2 mt-2 cursor-pointer w-full mx-4 text-center font-bold text-[2rem] h-[15vw]"
-                onClick={() => {
+                onClick={async () => {
                   try {
                     if (tgData.points < 100) {
                       alert("Недостаточно очков!");
                       return;
                     }
                     const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
-                    setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl pb-3 flex items-center justify-center ${choice}`}>{choice}</div>)))
+                    setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}>{choice}</div>)))
                     const payoutKey = newRandChoices.join('')
                     const payout = payouts[payoutKey] || 0
                     if (payout <= 16) {
@@ -217,14 +217,9 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                       setRes("Вам вернулось x3 вашей ставки! 🎉🤡🎉");
                       tgData.points += 200;
                     }
-                    useEffect(() => {
-                      const saveUser = async () => {
-                        const response = await fetch('/api/save-user', {
-                          method: 'POST',
-                          body: JSON.stringify(tgData)
-                        });
-                      };
-                      saveUser();
+                    const response = await fetch('/api/save-user', {
+                      method: 'POST',
+                      body: JSON.stringify(tgData)
                     });
                   } catch (e) {
                     console.error(e);
