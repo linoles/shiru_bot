@@ -95,7 +95,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
 
   let [res, setRes] = useState("x1 (=0$)");
   let [resColor, setResColor] = useState("stone");
-  let [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}>{choice}</div>)))
+  let [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.svg`} className="w-[60%]"></img></div>)))
 
   useEffect(() => {
     try {
@@ -121,7 +121,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               return;
             }
             const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
-            setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.svg`} className="w-[100%]"></img></div>)))
+            setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.svg`} className="w-[60%]"></img></div>)))
             const payoutKey = newRandChoices.join('')
             const payout = payouts[payoutKey] || 0
             if (payout <= 16) {
@@ -133,7 +133,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               setRes(`x0.5 (-50$)`);
               setResColor("red");
               curUser.points -= 50;
-              curUser.points_from.casino  -= 50
+              curUser.points_from.casino -= 50
             } else if (payout == 32) {
               setRes("x1 (=0$)");
               setResColor("stone");
