@@ -114,7 +114,61 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         const sb = tg.SecondaryButton;
         sb.enable();
         sb.setParams({ text: "Крутить ($100 очков)" });
-        sb.onClick(rollSlots);
+        sb.onClick(async () => {
+          try {
+            console.info(users.some(u => u.tgId === tgData.id));
+            const curUser = users.find(u => u.tgId === tgData.id);
+            if (curUser === undefined || curUser.points === undefined || curUser.points < 100) {
+              alert("Недостаточно очков!");
+              return;
+            }
+            const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
+            setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}>{choice}</div>)))
+            const payoutKey = newRandChoices.join('')
+            const payout = payouts[payoutKey] || 0
+            if (payout <= 16) {
+              setRes("x0 (-100$)");
+              setResColor("red");
+              curUser.points -= 100;
+            } else if (payout >= 17 && payout < 32) {
+              setRes(`x0.5 (-50$)`);
+              setResColor("red");
+              curUser.points -= 50;
+            } else if (payout == 32) {
+              setRes("x1 (=0$)");
+              setResColor("stone");
+            } else if (payout >= 33 && payout <= 48) {
+              setRes("x1.5 (+50$)");
+              setResColor("green");
+              curUser.points += 50;
+            } else if (payout >= 49 && payout < 64) {
+              setRes("x2 (+100$)");
+              setResColor("green");
+              curUser.points += 100;
+            } else {
+              setRes("х3 (+200$)");
+              setResColor("green");
+              curUser.points += 200;
+            }
+            const response = await fetch('/api/save-user', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(curUser),
+            })
+
+            if (!response.ok) {
+              const errorData = await response.json()
+              throw new Error(errorData.error || "Ошибка сервера")
+            }
+
+            const result = await response.json()
+            console.log("Успешно:", result)
+          } catch (e) {
+            console.error(e);
+          }
+        });
         sb.show();
       }
     } catch (error) {
@@ -126,7 +180,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     if (!tgData?.id) return
 
     const checkAndAddUser = async () => {
-      const exists = users.some(u => u.tgId === tgData.id)
+      const exists = users.some(u => u.tgId === tgData.id);
       if (!exists) {
         const response = await fetch('/api/add-user', {
           method: 'POST',
