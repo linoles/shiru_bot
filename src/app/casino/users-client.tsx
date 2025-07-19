@@ -18,11 +18,12 @@ export interface User {
   points: number;
   lvl: number;
   points_from: Points_from;
+  casinoBet: number;
 }
 
 export default function ClientComponent({ initialUsers }: { initialUsers: User[] }) {
   const [users, setUsers] = useState<User[]>(initialUsers);
-  const [curUser, setCurUser] = useState<User>({ tgId: 0, tgNick: '', tgUsername: '', points: 0, lvl: 1, points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 } });
+  const [curUser, setCurUser] = useState<User>({ tgId: 0, tgNick: '', tgUsername: '', points: 0, lvl: 1, points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 }, casinoBet: 100 });
   const [tgData, setTgData] = useState<any>(null);
 
   const symbols = ['🍇', '🍋', 'BAR', '7️⃣'];
@@ -266,26 +267,29 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               <div className={`font-semibold text-xl py-0.5 inline-flex items-center rounded-full border px-2.5 mt-2 mr-2 transition-colors focus:outline-none focus:ring-2 focus:ring-${resColor} focus:ring-offset-2 hover:bg-${resColor}/80 bg-${resColor}/10 text-${resColor} border-${resColor}/20`}>{res}</div>
             </div>
             <h3 className="text-lg font-bold text-muted-foreground">СТАВКА</h3>
-            <div className="w-full flex flex-col space-y-2">
+            <div className="w-screen flex flex-col space-y-2">
               <div className="w-full flex items-center justify-between space-x-2">
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary neumorlph-glow">
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points / 5)}
                 </div>
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary neumorlph-glow">
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points / 4)}
                 </div>
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary neumorlph-glow">
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points / 3)}
                 </div>
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary neumorlph-glow">
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points / 2)}
                 </div>
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary neumorlph-glow">
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points)}
                 </div>
               </div>
               <input
                 type="number"
+                max={curUser.points}
+                min={100}
+                value={curUser.casinoBet}
                 className="w-full bg-card rounded-xl border-primary shadow-sm p-3 text-center py-4 neumorph-glow"
               />
             </div>

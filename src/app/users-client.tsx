@@ -18,6 +18,7 @@ export interface User {
   points: number;
   lvl: number;
   points_from: Points_from;
+  casinoBet: number;
 }
 
 export default function ClientComponent({ initialUsers }: { initialUsers: User[] }) {
