@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import "@/src/app/globals.css";
 
 declare global {
@@ -98,6 +98,16 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   let [res, setRes] = useState("x1 (=0$)");
   let [resColor, setResColor] = useState("stone");
   let [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.png`} className="w-[60%]"></img></div>)))
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollContainerRef.current) {
+      // Вычисляем середину контейнера для прокрутки
+      const scrollWidth = scrollContainerRef.current.scrollWidth;
+      const clientWidth = scrollContainerRef.current.clientWidth;
+      scrollContainerRef.current.scrollLeft = (scrollWidth - clientWidth) / 2;
+    }
+  }, []);
 
   useEffect(() => {
     try {
@@ -278,7 +288,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             </div>
             <h3 className="text-lg font-bold text-muted-foreground">СТАВКА</h3>
             <div className="w-screen flex flex-col space-y-2">
-              <div className="w-full flex overflow-x-auto items-center justify-between space-x-2 mx-1">
+              <div
+                ref={scrollContainerRef}
+                className="w-full flex overflow-x-auto items-center justify-between space-x-2 mx-1 scroll-smooth" // добавлен scroll-smooth для плавной прокрутки
+              >
                 <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points / 5)}
                 </div>
@@ -300,7 +313,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                   e.preventDefault();
                   const target = e.target as HTMLFormElement;
                   const input = target.querySelector('input[type="number"]') as HTMLInputElement;
-                  window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить ($${input.value} очков)` })
                   if (input.valueAsNumber > curUser.points) {
                     alert('Ставка не может быть больше, чем у вас есть на счету!');
                     return;
@@ -309,6 +321,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     return;
                   }
                   curUser.casinoBet = input.valueAsNumber;
+                  window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить ($${curUser.casinoBet} очков)` })
                   const response = await fetch('/api/save-user', {
                     method: 'POST',
                     headers: {
