@@ -289,7 +289,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                 type="number"
                 max={curUser.points}
                 min={100}
-                value={curUser.casinoBet}
+                placeholder={`Введите желаемую ставку... (${curUser.casinoBet})`}
                 className="w-full bg-card rounded-xl border-primary shadow-sm p-3 text-center py-4 neumorph-glow"
               />
             </div>
