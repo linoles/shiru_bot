@@ -238,11 +238,11 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       alert('Минимальная ставка в казино: $100 очков!');
       return;
     }
+    window.Telegram.WebApp.SecondaryButton.setProgress(true);
     window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить ($${bet} очков)` });
-    window.Telegram.WebApp.SecondaryButton.diasble();
     setTimeout(() => {
-      window.Telegram.WebApp.SecondaryButton.enable();
-    }, 500);
+      window.Telegram.WebApp.SecondaryButton.setProgress(false);
+    }, 300);
     const response = await fetch('/api/save-user', {
       method: 'POST',
       headers: {
@@ -330,19 +330,19 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                 ref={scrollContainerRef}
                 className="w-full flex overflow-x-auto items-center justify-between space-x-2 mx-1 scroll-smooth" // добавлен scroll-smooth для плавной прокрутки
               >
-                <div className="flex-shrink-0 w-24 text-card-foreground shadow-sm bg-card p-3 text-center rounded-xl border border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => betHandler(curUser, Math.floor(curUser.points / 5))}>
+                <div className="neumorph-glow flex-shrink-0 w-24 text-card-foreground shadow-sm bg-card p-3 text-center rounded-xl border border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => betHandler(curUser, Math.floor(curUser.points / 5))}>
                   ${Math.floor(curUser.points / 5)}
                 </div>
-                <div className="flex-shrink-0 w-24 text-card-foreground shadow-sm bg-card p-3 text-center rounded-xl border border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => betHandler(curUser, (Math.floor(curUser.points / 4)))}>
+                <div className="neumorph-glow flex-shrink-0 w-24 text-card-foreground shadow-sm bg-card p-3 text-center rounded-xl border border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => betHandler(curUser, (Math.floor(curUser.points / 4)))}>
                   ${Math.floor(curUser.points / 4)}
                 </div>
-                <div className="flex-shrink-0 w-24 text-card-foreground shadow-sm bg-card p-3 text-center rounded-xl border border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => betHandler(curUser, Math.floor(curUser.points / 3))}>
+                <div className="neumorph-glow flex-shrink-0 w-24 text-card-foreground shadow-sm bg-card p-3 text-center rounded-xl border border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => betHandler(curUser, Math.floor(curUser.points / 3))}>
                   ${Math.floor(curUser.points / 3)}
                 </div>
-                <div className="flex-shrink-0 w-24 text-card-foreground shadow-sm bg-card p-3 text-center rounded-xl border border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => betHandler(curUser, Math.floor(curUser.points / 2))}>
+                <div className="neumorph-glow flex-shrink-0 w-24 text-card-foreground shadow-sm bg-card p-3 text-center rounded-xl border border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => betHandler(curUser, Math.floor(curUser.points / 2))}>
                   ${Math.floor(curUser.points / 2)}
                 </div>
-                <div className="flex-shrink-0 w-24 text-card-foreground shadow-sm bg-card p-3 text-center rounded-xl border border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => betHandler(curUser, Math.floor(curUser.points))}>
+                <div className="neumorph-glow flex-shrink-0 w-24 text-card-foreground shadow-sm bg-card p-3 text-center rounded-xl border border-border hover:border-primary/50 transition-colors cursor-pointer" onClick={() => betHandler(curUser, Math.floor(curUser.points))}>
                   ${Math.floor(curUser.points)}
                 </div>
               </div>
@@ -359,10 +359,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     return;
                   }
                   window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить ($${input.valueAsNumber} очков)` });
-                  window.Telegram.WebApp.SecondaryButton.diasble();
-                  setTimeout(() => {
-                    window.Telegram.WebApp.SecondaryButton.enable();
-                  }, 500);
                   const response = await fetch('/api/save-user', {
                     method: 'POST',
                     headers: {
@@ -406,7 +402,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[59%] text-start bg-card rounded-xl shadow-sm"
                     style={{ padding: '0.75rem' }}
                   />
-                  <input type="submit" value="Поставить" className="p-3 w-[39%] bg-primary text-card-foreground rounded-xl mr-1 shadow-sm border border-border border-primary/50 transition-colors cursor-pointer" style={{ padding: '0.75rem' }} />
+                  <input type="submit" value="Поставить" className="p-3 w-[39%] bg-primary text-card-foreground rounded-xl mr-1 shadow-sm border border-border border-primary/50 transition-colors cursor-pointer green-neumorph-glow" style={{ padding: '0.75rem' }} />
                 </div>
               </form>
             </div>
