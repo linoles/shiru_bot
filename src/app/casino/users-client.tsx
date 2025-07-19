@@ -362,7 +362,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[59%] text-start bg-card rounded-xl shadow-sm"
                     style={{ padding: '0.75rem' }}
                   />
-                  <input type="submit" value="Поставить" className="p-3 w-[39%] bg-primary text-card-foreground rounded-xl mr-1" style={{ padding: '0.75rem' }} />
+                  <input type="submit" value="Поставить" className="p-3 w-[39%] bg-primary/20 text-card-foreground rounded-xl mr-1 shadow-sm border-border hover:border-primary/50 transition-colors cursor-pointer" style={{ padding: '0.75rem' }} />
                 </div>
               </form>
             </div>
