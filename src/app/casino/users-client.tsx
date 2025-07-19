@@ -200,7 +200,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     } catch (error) {
       console.error(error)
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (!tgData?.id) return
