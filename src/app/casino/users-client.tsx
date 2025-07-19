@@ -135,6 +135,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               alert("Недостаточно очков!");
               return;
             } else if (curUser.casinoBet > curUser.points) {
+              console.info(curUser);
               alert("Недостаточно очков! Сделайте другую ставку.");
               return;
             }
@@ -277,7 +278,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             </div>
             <h3 className="text-lg font-bold text-muted-foreground">СТАВКА</h3>
             <div className="w-screen flex flex-col space-y-2">
-              <div className="w-full flex overflow-x-auto items-center justify-between space-x-2 mx-1">
+              <div className="w-full flex overflow-x-auto items-center justify-between space-x-2 mx-1 sc-left">
                 <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points / 5)}
                 </div>
@@ -332,10 +333,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     max={curUser.points}
                     min={100}
                     placeholder="Введите ставку..."
-                    className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[60%] text-start bg-card rounded-xl shadow-sm mr-1"
+                    className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[55%] text-start bg-card rounded-xl shadow-sm mr-1"
                     style={{ padding: '0.75rem' }}
                   />
-                  <input type="submit" value="Поставить" className="p-3 w-[40%] bg-primary text-card-foreground rounded-lg" style={{ padding: '0.75rem' }} />
+                  <input type="submit" value="Поставить" className="ml-1 p-3 w-[35%] bg-primary text-card-foreground rounded-lg" style={{ padding: '0.75rem' }} />
                 </div>
               </form>
             </div>
