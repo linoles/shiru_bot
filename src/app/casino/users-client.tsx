@@ -268,19 +268,25 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             <h3 className="text-lg font-bold text-muted-foreground">СТАВКА</h3>
             <div className="w-full flex flex-col space-y-2">
               <div className="w-full flex items-center justify-between space-x-2">
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary">
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary neumorlph-glow">
+                  ${Math.floor(curUser.points / 5)}
+                </div>
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary neumorlph-glow">
+                  ${Math.floor(curUser.points / 4)}
+                </div>
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary neumorlph-glow">
                   ${Math.floor(curUser.points / 3)}
                 </div>
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary">
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary neumorlph-glow">
                   ${Math.floor(curUser.points / 2)}
                 </div>
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary">
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary neumorlph-glow">
                   ${Math.floor(curUser.points)}
                 </div>
               </div>
               <input
-                type="text"
-                className="w-full bg-card rounded-xl border-primary shadow-sm p-3 text-center"
+                type="number"
+                className="w-full bg-card rounded-xl border-primary shadow-sm p-3 text-center py-4 neumorph-glow"
               />
             </div>
           </div>
