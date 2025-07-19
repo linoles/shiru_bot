@@ -146,28 +146,28 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               curUser.points -= curUser.casinoBet;
               curUser.points_from.casino -= curUser.casinoBet;
             } else if (payout >= 17 && payout < 32) {
-              setRes(`x0.5 (-${curUser.casinoBet / 2}$)`);
+              setRes(`x0.5 (-${Math.floor(curUser.casinoBet / 2)}$)`);
               setResColor("red");
-              curUser.points -= (curUser.casinoBet / 2);
-              curUser.points_from.casino -= (curUser.casinoBet / 2);
+              curUser.points -= Math.floor(curUser.casinoBet / 2);
+              curUser.points_from.casino -= Math.floor(curUser.casinoBet / 2);
             } else if (payout == 32) {
               setRes("x1 (=0$)");
               setResColor("stone");
             } else if (payout >= 33 && payout <= 48) {
-              setRes(`x1.4 (+${curUser.casinoBet * 1.4 - curUser.casinoBet}$)`);
+              setRes(`x1.4 (+${Math.floor(curUser.casinoBet * 1.4 - curUser.casinoBet)}$)`);
               setResColor("green");
-              curUser.points += (curUser.casinoBet * 1.4 - curUser.casinoBet);
-              curUser.points_from.casino += (curUser.casinoBet * 1.4 - curUser.casinoBet);
+              curUser.points += Math.floor(curUser.casinoBet * 1.4 - curUser.casinoBet);
+              curUser.points_from.casino += Math.floor(curUser.casinoBet * 1.4 - curUser.casinoBet);
             } else if (payout >= 49 && payout < 64) {
-              setRes(`x1.8 (+${curUser.casinoBet * 1.8 - curUser.casinoBet}$)`);
+              setRes(`x1.8 (+${Math.floor(curUser.casinoBet * 1.8 - curUser.casinoBet)}$)`);
               setResColor("green");
-              curUser.points += (curUser.casinoBet * 1.8 - curUser.casinoBet);
-              curUser.points_from.casino += (curUser.casinoBet * 1.8 - curUser.casinoBet);
+              curUser.points += Math.floor(curUser.casinoBet * 1.8 - curUser.casinoBet);
+              curUser.points_from.casino += Math.floor(curUser.casinoBet * 1.8 - curUser.casinoBet);
             } else {
-              setRes(`х5 (+${curUser.casinoBet * 5 - curUser.casinoBet}$)`);
+              setRes(`х5 (+${Math.floor(curUser.casinoBet * 5 - curUser.casinoBet)}$)`);
               setResColor("green");
-              curUser.points += (curUser.casinoBet * 5 - curUser.casinoBet);
-              curUser.points_from.casino += (curUser.casinoBet * 5 - curUser.casinoBet);
+              curUser.points += Math.floor(curUser.casinoBet * 5 - curUser.casinoBet);
+              curUser.points_from.casino += Math.floor(curUser.casinoBet * 5 - curUser.casinoBet);
             }
             const response = await fetch('/api/save-user', {
               method: 'POST',
@@ -302,6 +302,9 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                   window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить ($${input.value} очков)` })
                   if (input.valueAsNumber > curUser.points) {
                     alert('Ставка не может быть больше, чем у вас есть на счету!');
+                    return;
+                  } else if (input.valueAsNumber != Math.floor(input.valueAsNumber)) {
+                    alert('Ставка должна быть целым числом!');
                     return;
                   }
                   const response = await fetch('/api/save-user', {
