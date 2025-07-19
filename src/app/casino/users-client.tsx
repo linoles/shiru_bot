@@ -319,9 +319,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     alert('Ставка должна быть целым числом!');
                     return;
                   }
-                  curUser.casinoBet = input.valueAsNumber;
-                  setCurUser({ ...curUser });
-                  window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить ($${curUser.casinoBet} очков)` })
+                  window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить ($${input.valueAsNumber} очков)` })
                   const response = await fetch('/api/save-user', {
                     method: 'POST',
                     headers: {
@@ -334,8 +332,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                   });
                   if (!response.ok) {
                     alert(`Ошибка при сохранении ставки! ${response.statusText}`);
+                    console.info(response, curUser)
                     return;
                   }
+                  setCurUser(prev => ({ ...prev, casinoBet: input.valueAsNumber }));
                   input.value = '';
                 }}
               >
