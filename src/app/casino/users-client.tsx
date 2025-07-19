@@ -26,6 +26,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [curUser, setCurUser] = useState<User>({ tgId: 0, tgNick: '', tgUsername: '', points: 0, lvl: 1, points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 }, casinoBet: 100 });
   const [tgData, setTgData] = useState<any>(null);
+  const [bet, setBet] = useState(0);
 
   const symbols = ['🍇', '🍋', 'BAR', '7️⃣'];
   const rand_choices = ["🍀", "🍀", "🍀"];
@@ -288,19 +289,19 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                 ref={scrollContainerRef}
                 className="w-full flex overflow-x-auto items-center justify-between space-x-2 mx-1 scroll-smooth" // добавлен scroll-smooth для плавной прокрутки
               >
-                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => setBet(Math.floor(curUser.points / 5))}>
                   ${Math.floor(curUser.points / 5)}
                 </div>
-                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => setBet(Math.floor(curUser.points / 4))}>
                   ${Math.floor(curUser.points / 4)}
                 </div>
-                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => setBet(Math.floor(curUser.points / 3))}>
                   ${Math.floor(curUser.points / 3)}
                 </div>
-                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => setBet(Math.floor(curUser.points / 2))}>
                   ${Math.floor(curUser.points / 2)}
                 </div>
-                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => setBet(Math.floor(curUser.points))}>
                   ${Math.floor(curUser.points)}
                 </div>
               </div>
@@ -357,10 +358,11 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     max={curUser.points}
                     min={100}
                     placeholder="Введите ставку..."
+                    value={bet == 0 ? "" : bet}
                     className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[59%] text-start bg-card rounded-xl shadow-sm"
                     style={{ padding: '0.75rem' }}
                   />
-                  <input type="submit" value="Поставить" className="p-3 w-[39%] bg-primary text-card-foreground rounded-lg mr-1" style={{ padding: '0.75rem' }} />
+                  <input type="submit" value="Поставить" className="p-3 w-[39%] bg-primary text-card-foreground rounded-xl mr-1" style={{ padding: '0.75rem' }} />
                 </div>
               </form>
             </div>
