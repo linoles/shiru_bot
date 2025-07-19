@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import "@/app/globals.css";
 
 declare global {
   interface Window {
@@ -268,7 +269,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             </div>
             <h3 className="text-lg font-bold text-muted-foreground">СТАВКА</h3>
             <div className="w-screen flex flex-col space-y-2">
-              <div className="w-full flex items-center justify-between space-x-2">
+              <div className="w-full flex items-center justify-between space-x-2 mx-1">
                 <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points / 5)}
                 </div>
@@ -289,8 +290,8 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                 type="number"
                 max={curUser.points}
                 min={100}
-                placeholder={`Введите желаемую ставку... (${curUser.casinoBet})`}
-                className="w-full bg-card rounded-xl border-primary shadow-sm p-3 text-center py-4 neumorph-glow"
+                placeholder={`Введите ставку... (${curUser.casinoBet})`}
+                className="w-full bg-card rounded-xl border-primary shadow-sm p-3 text-center py-6 border-primary/50"
               />
             </div>
           </div>
