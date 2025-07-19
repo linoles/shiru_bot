@@ -28,7 +28,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   const [tgData, setTgData] = useState<any>(null);
 
   const symbols = ['🍇', '🍋', 'BAR', '7️⃣'];
-  const rand_choices = ["7️⃣", "7️⃣", "7️⃣"];
+  const rand_choices = ["🍀", "🍀", "🍀"];
   const payouts: { [key: string]: number } = {
     "7️⃣7️⃣7️⃣": 64,
     "🍋🍋🍋": 43,
@@ -314,13 +314,13 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                   input.value = '';
                 }}
               >
-                <div className="w-[calc(100%-4px)] bg-card rounded-xl border-primary shadow-sm p-3 text-center py-6 border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2">
+                <div className="w-[calc(100%-4px)] border-primary mx-1 p-3 text-center py-6 border-primary/50 focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 space-x-2">
                   <input
                     type="number"
                     max={curUser.points}
                     min={100}
                     placeholder={`Введите ставку... (${curUser.casinoBet})`}
-                    className="hover:border-0 focus:border-0 py-3 w-[60%] text-start"
+                    className="hover:border-0 focus:border-0 focus:outline-none py-3 w-[60%] text-start bg-card rounded-xl shadow-sm"
                   />
                   <input type="submit" value="Поставить" className="py-3 w-[40%] bg-primary text-card-foreground rounded-lg" />
                 </div>
