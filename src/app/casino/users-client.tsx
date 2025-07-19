@@ -333,10 +333,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     max={curUser.points}
                     min={100}
                     placeholder="Введите ставку..."
-                    className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[55%] text-start bg-card rounded-xl shadow-sm"
+                    className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[59%] text-start bg-card rounded-xl shadow-sm"
                     style={{ padding: '0.75rem' }}
                   />
-                  <input type="submit" value="Поставить" className="p-3 w-[35%] bg-primary text-card-foreground rounded-lg" style={{ padding: '0.75rem' }} />
+                  <input type="submit" value="Поставить" className="p-3 w-[39%] bg-primary text-card-foreground rounded-lg mr-1" style={{ padding: '0.75rem' }} />
                 </div>
               </form>
             </div>
