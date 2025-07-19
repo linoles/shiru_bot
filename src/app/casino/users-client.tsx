@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import "@/app/globals.css";
+import "@/src/app/globals.css";
 
 declare global {
   interface Window {
