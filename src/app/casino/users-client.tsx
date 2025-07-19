@@ -26,7 +26,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [curUser, setCurUser] = useState<User>({ tgId: 0, tgNick: '', tgUsername: '', points: 0, lvl: 1, points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 }, casinoBet: 100 });
   const [tgData, setTgData] = useState<any>(null);
-  const [bet, setBet] = useState(0);
 
   const symbols = ['🍇', '🍋', 'BAR', '7️⃣'];
   const rand_choices = ["🍀", "🍀", "🍀"];
@@ -234,6 +233,44 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     checkAndAddUser()
   }, [tgData, users]);
 
+  const betHandler = async (curUser: User, bet: number) => {
+    if (bet < 100) {
+      alert('Минимальная ставка в казино: $100 очков!');
+      return;
+    }
+    window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить ($${bet} очков)` })
+    const response = await fetch('/api/save-user', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        tgId: tgData.id,
+        tgUsername: tgData.username,
+        tgNick: tgData.first_name,
+        points: curUser.points,
+        lvl: curUser.lvl,
+        points_from: curUser.points_from,
+        casinoBet: bet
+      }),
+    });
+    if (!response.ok) {
+      alert(`Ошибка при сохранении ставки! ${response.statusText}`);
+      return;
+    }
+    setCurUser(prev => ({
+      tgId: prev.tgId,
+      tgUsername: prev.tgUsername,
+      tgNick: prev.tgNick,
+      points: prev.points,
+      lvl: prev.lvl,
+      points_from: prev.points_from,
+      casinoBet: bet
+    }));
+    curUser.casinoBet = bet;
+    setUsers(prev => prev.map(u => u.tgId === curUser.tgId ? curUser : u));
+  }
+
   return (
     <div id="root" className="overflow-hidden overflow-x-hidden overflow-y-hidden">
       <div role="region" aria-label="Notifications (F8)" tabIndex={-1} style={{ pointerEvents: "none" }}>
@@ -289,19 +326,19 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                 ref={scrollContainerRef}
                 className="w-full flex overflow-x-auto items-center justify-between space-x-2 mx-1 scroll-smooth" // добавлен scroll-smooth для плавной прокрутки
               >
-                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => setBet(Math.floor(curUser.points / 5))}>
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => betHandler(curUser, Math.floor(curUser.points / 5))}>
                   ${Math.floor(curUser.points / 5)}
                 </div>
-                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => setBet(Math.floor(curUser.points / 4))}>
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => betHandler(curUser, (Math.floor(curUser.points / 4)))}>
                   ${Math.floor(curUser.points / 4)}
                 </div>
-                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => setBet(Math.floor(curUser.points / 3))}>
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => betHandler(curUser, Math.floor(curUser.points / 3))}>
                   ${Math.floor(curUser.points / 3)}
                 </div>
-                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => setBet(Math.floor(curUser.points / 2))}>
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => betHandler(curUser, Math.floor(curUser.points / 2))}>
                   ${Math.floor(curUser.points / 2)}
                 </div>
-                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => setBet(Math.floor(curUser.points))}>
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50" onClick={() => betHandler(curUser, Math.floor(curUser.points))}>
                   ${Math.floor(curUser.points)}
                 </div>
               </div>
@@ -358,11 +395,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     max={curUser.points}
                     min={100}
                     placeholder="Введите ставку..."
-                    value={bet == 0 ? "" : bet}
                     className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[59%] text-start bg-card rounded-xl shadow-sm"
                     style={{ padding: '0.75rem' }}
                   />
-                  <input type="submit" value="Поставить" className="p-3 w-[39%] bg-primary/20 text-card-foreground rounded-xl mr-1 shadow-sm border-border hover:border-primary/50 transition-colors cursor-pointer" style={{ padding: '0.75rem' }} />
+                  <input type="submit" value="Поставить" className="p-3 w-[39%] bg-primary/50 text-card-foreground rounded-xl mr-1 shadow-sm border-border cursor-pointer" style={{ padding: '0.75rem' }} />
                 </div>
               </form>
             </div>
