@@ -291,7 +291,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                 max={curUser.points}
                 min={100}
                 placeholder={`Введите ставку... (${curUser.casinoBet})`}
-                className="w-full bg-card rounded-xl border-primary shadow-sm p-3 text-center py-6 border-primary/50"
+                className="w-full bg-card rounded-xl border-primary shadow-sm p-3 text-center py-6 border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 hover:border-0 focus:border-0"
               />
             </div>
           </div>
