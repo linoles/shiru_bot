@@ -144,7 +144,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               alert("Недостаточно очков!");
               return;
             } else if (curUser.casinoBet > curUser.points) {
-              console.info(curUser);
               alert("Недостаточно очков! Сделайте другую ставку.");
               return;
             }
@@ -191,9 +190,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               const errorData = await response.json()
               throw new Error(errorData.error || "Ошибка сервера")
             }
-
             const result = await response.json()
-            console.log("Успешно:", result)
           } catch (e) {
             console.error(e);
           }
@@ -349,7 +346,8 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     points_from: prev.points_from,
                     casinoBet: input.valueAsNumber
                   }));
-                  curUser.casinoBet = input.valueAsNumber
+                  curUser.casinoBet = input.valueAsNumber;
+                  setUsers(prev => prev.map(u => u.tgId === curUser.tgId ? curUser : u));
                   input.value = '';
                 }}
               >
