@@ -299,6 +299,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                   e.preventDefault();
                   const target = e.target as HTMLFormElement;
                   const input = target.querySelector('input[type="number"]') as HTMLInputElement;
+                  window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить (${input.value})` })
                   if (input.valueAsNumber > curUser.points) {
                     alert('Ставка не может быть больше, чем у вас есть на счету!');
                     return;
@@ -314,7 +315,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     }),
                   });
                   if (!response.ok) {
-                    alert('Ошибка при сохранении ставки!');
+                    alert(`Ошибка при сохранении ставки! ${response.statusText}`);
                     return;
                   }
                   const newUser = await response.json();
