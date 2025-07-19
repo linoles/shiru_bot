@@ -277,20 +277,20 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             </div>
             <h3 className="text-lg font-bold text-muted-foreground">СТАВКА</h3>
             <div className="w-screen flex flex-col space-y-2">
-              <div className="w-full flex items-center justify-between space-x-2 mx-1">
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
+              <div className="w-full flex overflow-x-auto items-center justify-between space-x-2 mx-1">
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points / 5)}
                 </div>
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points / 4)}
                 </div>
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points / 3)}
                 </div>
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points / 2)}
                 </div>
-                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
+                <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points)}
                 </div>
               </div>
@@ -299,7 +299,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                   e.preventDefault();
                   const target = e.target as HTMLFormElement;
                   const input = target.querySelector('input[type="number"]') as HTMLInputElement;
-                  window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить (${input.value})` })
+                  window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить ($${input.value} очков)` })
                   if (input.valueAsNumber > curUser.points) {
                     alert('Ставка не может быть больше, чем у вас есть на счету!');
                     return;
@@ -323,13 +323,13 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                   input.value = '';
                 }}
               >
-                <div className="w-[calc(100%-4px)] border-primary mx-1 mt-2 text-center border-primary/50 focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 space-x-2 flex flex-row justify-between">
+                <div className="w-[calc(100%-4px)] border-primary mx-1 mt-1 text-center border-primary/50 focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 space-x-2 flex flex-row justify-between">
                   <input
                     type="number"
                     max={curUser.points}
                     min={100}
                     placeholder="Введите ставку..."
-                    className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[60%] text-start bg-card rounded-xl shadow-sm"
+                    className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[60%] text-start bg-card rounded-xl shadow-sm mr-1"
                     style={{ padding: '0.75rem' }}
                   />
                   <input type="submit" value="Поставить" className="p-3 w-[40%] bg-primary text-card-foreground rounded-lg" style={{ padding: '0.75rem' }} />
