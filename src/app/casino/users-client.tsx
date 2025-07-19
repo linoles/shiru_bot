@@ -238,11 +238,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       alert('Минимальная ставка в казино: $100 очков!');
       return;
     }
-    window.Telegram.WebApp.SecondaryButton.setProgress(true);
     window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить ($${bet} очков)` });
-    setTimeout(() => {
-      window.Telegram.WebApp.SecondaryButton.setProgress(false);
-    }, 300);
     const response = await fetch('/api/save-user', {
       method: 'POST',
       headers: {
@@ -402,7 +398,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[59%] text-start bg-card rounded-xl shadow-sm"
                     style={{ padding: '0.75rem' }}
                   />
-                  <input type="submit" value="Поставить" className="p-3 w-[39%] bg-primary text-card-foreground rounded-xl mr-1 shadow-sm border border-border border-primary/50 transition-colors cursor-pointer green-neumorph-glow" style={{ padding: '0.75rem' }} />
+                  <input type="submit" value="Поставить" className="font-extrabold p-3 w-[39%] bg-primary text-card-foreground rounded-xl mr-1 shadow-sm border border-border border-primary/50 transition-colors cursor-pointer green-neumorph-glow" style={{ padding: '0.75rem' }} />
                 </div>
               </form>
             </div>
