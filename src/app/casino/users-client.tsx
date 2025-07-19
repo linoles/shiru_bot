@@ -119,7 +119,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         mb.enable();
         mb.setParams({ text: "Бесплатная игра" });
         // mb.showProgress(true);
-        mb.onClick(() => location.href = "/casino/free");
+        mb.onClick(() => window.location.replace("/casino/free"));
         mb.show();
         const sb = tg.SecondaryButton;
         sb.enable();
