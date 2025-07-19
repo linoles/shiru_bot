@@ -336,11 +336,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     console.info(response, curUser);
                     return;
                   }
-                  if (!response.ok) {
-                    alert(`Ошибка при сохранении ставки! ${response.statusText}`);
-                    console.info(response, curUser)
-                    return;
-                  }
                   setCurUser(prev => ({ ...prev, casinoBet: input.valueAsNumber }));
                   input.value = '';
                 }}
