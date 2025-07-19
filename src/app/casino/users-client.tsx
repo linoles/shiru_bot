@@ -326,7 +326,12 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                      ...curUser,
+                      tgId: tgData.id,
+                      tgUsername: tgData.username,
+                      tgNick: tgData.first_name,
+                      points: curUser.points,
+                      lvl: curUser.lvl,
+                      points_from: curUser.points_from,
                       casinoBet: input.valueAsNumber
                     }),
                   });
