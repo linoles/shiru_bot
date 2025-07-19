@@ -314,15 +314,15 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                   input.value = '';
                 }}
               >
-                <div className="w-[calc(100%-4px)] border-primary mx-1 p-3 text-center py-6 border-primary/50 focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 space-x-2">
+                <div className="w-[calc(100%-4px)] border-primary mx-1 p-3 text-center py-6 border-primary/50 focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 space-x-2 flex flex-row justify-between">
                   <input
                     type="number"
                     max={curUser.points}
                     min={100}
                     placeholder={`Введите ставку... (${curUser.casinoBet})`}
-                    className="hover:border-0 focus:border-0 focus:outline-none py-3 w-[60%] text-start bg-card rounded-xl shadow-sm"
+                    className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[60%] text-start bg-card rounded-xl shadow-sm"
                   />
-                  <input type="submit" value="Поставить" className="py-3 w-[40%] bg-primary text-card-foreground rounded-lg" />
+                  <input type="submit" value="Поставить" className="p-3 w-[40%] bg-primary text-card-foreground rounded-lg" />
                 </div>
               </form>
             </div>
