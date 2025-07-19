@@ -121,7 +121,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             <div className="flex items-center justify-center w-12 h-12 bg-primary rounded-full">
               <Image src="/copy.png" alt="copy" className="w-6 h-6" width={24} height={24} />
             </div>
-            <span className="text-sm text-muted-foreground ml-2 py-3 px-2 bg-card rounded-xl max-w-[80vw]">https://t.me/ShiruChatBot/ShiruApp/casino/free</span>
+            <span className="text-sm text-muted-foreground ml-2 py-3 px-2 bg-card rounded-xl max-w-[70vw]">https://t.me/ShiruChatBot/ShiruApp/casino/free</span>
           </div>
         </div>
       </div>
