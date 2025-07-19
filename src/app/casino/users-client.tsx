@@ -114,7 +114,12 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         mb.show();
         const sb = tg.SecondaryButton;
         sb.enable();
-        sb.setParams({ text: "Крутить ($100 очков)" });
+        const curUser = users.find(u => u.tgId === window.Telegram?.WebApp.initDataUnsafe?.user.id);
+        if (curUser === undefined || curUser.points === undefined || curUser.points < 100) {
+          alert("Недостаточно очков!");
+          return;
+        }
+        sb.setParams({ text: `Крутить ($${curUser.casinoBet} очков)` });
         sb.onClick(async () => {
           try {
             setRes("...");
@@ -129,37 +134,40 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             if (curUser === undefined || curUser.points === undefined || curUser.points < 100) {
               alert("Недостаточно очков!");
               return;
+            } else if (curUser.casinoBet > curUser.points) {
+              alert("Недостаточно очков! Сделайте другую ставку.");
+              return;
             }
             const payoutKey = newRandChoices.join('')
             const payout = payouts[payoutKey] || 0
             if (payout <= 16) {
-              setRes("x0 (-100$)");
+              setRes(`x0 (-${curUser.casinoBet}$)`);
               setResColor("red");
-              curUser.points -= 100;
-              curUser.points_from.casino -= 100;
+              curUser.points -= curUser.casinoBet;
+              curUser.points_from.casino -= curUser.casinoBet;
             } else if (payout >= 17 && payout < 32) {
-              setRes(`x0.5 (-50$)`);
+              setRes(`x0.5 (-${curUser.casinoBet / 2}$)`);
               setResColor("red");
-              curUser.points -= 50;
-              curUser.points_from.casino -= 50
+              curUser.points -= (curUser.casinoBet / 2);
+              curUser.points_from.casino -= (curUser.casinoBet / 2);
             } else if (payout == 32) {
               setRes("x1 (=0$)");
               setResColor("stone");
             } else if (payout >= 33 && payout <= 48) {
-              setRes("x1.4 (+40$)");
+              setRes(`x1.4 (+${curUser.casinoBet * 1.4 - curUser.casinoBet}$)`);
               setResColor("green");
-              curUser.points += 40;
-              curUser.points_from.casino += 40;
+              curUser.points += (curUser.casinoBet * 1.4 - curUser.casinoBet);
+              curUser.points_from.casino += (curUser.casinoBet * 1.4 - curUser.casinoBet);
             } else if (payout >= 49 && payout < 64) {
-              setRes("x1.8 (+80$)");
+              setRes(`x1.8 (+${curUser.casinoBet * 1.8 - curUser.casinoBet}$)`);
               setResColor("green");
-              curUser.points += 80;
-              curUser.points_from.casino += 80;
+              curUser.points += (curUser.casinoBet * 1.8 - curUser.casinoBet);
+              curUser.points_from.casino += (curUser.casinoBet * 1.8 - curUser.casinoBet);
             } else {
-              setRes("х5 (+400$)");
+              setRes(`х5 (+${curUser.casinoBet * 5 - curUser.casinoBet}$)`);
               setResColor("green");
-              curUser.points += 400;
-              curUser.points_from.casino += 400;
+              curUser.points += (curUser.casinoBet * 5 - curUser.casinoBet);
+              curUser.points_from.casino += (curUser.casinoBet * 5 - curUser.casinoBet);
             }
             const response = await fetch('/api/save-user', {
               method: 'POST',
@@ -314,16 +322,16 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                   input.value = '';
                 }}
               >
-                <div className="w-[calc(100%-4px)] border-primary mx-1 p-3 text-center py-6 border-primary/50 focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 space-x-2 flex flex-row justify-between">
+                <div className="w-[calc(100%-4px)] border-primary mx-1 mt-2 text-center border-primary/50 focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 space-x-2 flex flex-row justify-between">
                   <input
                     type="number"
                     max={curUser.points}
                     min={100}
-                    placeholder={`Введите ставку... (${curUser.casinoBet})`}
+                    placeholder="Введите ставку..."
                     className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[60%] text-start bg-card rounded-xl shadow-sm"
-                    style={{padding: '0.75rem'}}
+                    style={{ padding: '0.75rem' }}
                   />
-                  <input type="submit" value="Поставить" className="p-3 w-[40%] bg-primary text-card-foreground rounded-lg" style={{padding: '0.75rem'}} />
+                  <input type="submit" value="Поставить" className="p-3 w-[40%] bg-primary text-card-foreground rounded-lg" style={{ padding: '0.75rem' }} />
                 </div>
               </form>
             </div>
