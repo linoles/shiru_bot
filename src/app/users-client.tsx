@@ -27,7 +27,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
 
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
-    console.info(tg)
+    console.info(tg.start_param);
     if (tg) {
       tg.requestFullscreen();
       setTgData(tg.initDataUnsafe?.user);
