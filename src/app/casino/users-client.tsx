@@ -326,10 +326,16 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                       'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                      curUser,
+                      ...curUser,
                       casinoBet: input.valueAsNumber
                     }),
                   });
+
+                  if (!response.ok) {
+                    alert(`Ошибка при сохранении ставки! ${response.statusText}`);
+                    console.info(response, curUser);
+                    return;
+                  }
                   if (!response.ok) {
                     alert(`Ошибка при сохранении ставки! ${response.statusText}`);
                     console.info(response, curUser)
