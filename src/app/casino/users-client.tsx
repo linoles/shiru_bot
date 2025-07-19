@@ -118,7 +118,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         const mb = tg.MainButton;
         mb.enable();
         mb.setParams({ text: "Бесплатная игра" });
-        // mb.showProgress(true);
         mb.onClick(() => window.location.replace("/casino/free"));
         mb.show();
         const sb = tg.SecondaryButton;
@@ -281,8 +280,8 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         <div className="flex items-center justify-center p-4 border-b border-border">
           <div className="flex items-center space-x-2">
             <h1 className="text-2xl font-bold cursor-pointer" onClick={() => alert(`Вход выполнен через: ${tgData?.username ? `@${tgData.username} (id${tgData?.id})` : `${tgData?.first_name} (id${tgData?.id})`}`)}>
-              <span className="text-foreground neumorph-glow">SHIRU</span>
-              <span className="text-primary ml-1 green-neumorph-glow">BOT</span>
+              <span className="text-foreground neumorph-glow"><b>SHIRU</b></span>
+              <span className="text-primary ml-1 green-neumorph-glow"><b>BOT</b></span>
             </h1>
             <div className="w-2 h-2 bg-primary rounded-full animate-pulse green-neumorph-glow"></div>
           </div>

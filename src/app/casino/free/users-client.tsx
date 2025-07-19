@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import "@/src/app/globals.css";
+import Image from 'next/image';
 
 declare global {
   interface Window {
@@ -30,11 +31,15 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   useEffect(() => {
     try {
       const tg = window.Telegram.WebApp;
-      tg.ready();
       if (tg) {
         setTgData(tg.initDataUnsafe?.user);
         tg.BackButton.onClick(() => location.href = "/casino");
         tg.BackButton.show();
+        const mb = tg.MainButton;
+        mb.enable();
+        mb.setParams({ text: "Получить ссылку 🔗" });
+        mb.onClick(() => alert("Hello!"));
+        mb.show();
       }
     } catch (error) {
       console.error(error);
@@ -82,8 +87,8 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         <div className="flex items-center justify-center p-4 border-b border-border">
           <div className="flex items-center space-x-2">
             <h1 className="text-2xl font-bold cursor-pointer" onClick={() => alert(`Вход выполнен через: ${tgData?.username ? `@${tgData.username} (id${tgData?.id})` : `${tgData?.first_name} (id${tgData?.id})`}`)}>
-              <span className="text-foreground neumorph-glow">SHIRU</span>
-              <span className="text-primary ml-1 green-neumorph-glow">BOT</span>
+              <span className="text-foreground neumorph-glow"><b>SHIRU</b></span>
+              <span className="text-primary ml-1 green-neumorph-glow"><b>BOT</b></span>
             </h1>
             <div className="w-2 h-2 bg-primary rounded-full animate-pulse green-neumorph-glow"></div>
           </div>
@@ -112,6 +117,12 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             </div>
           </div>
           <h2 className="text-lg font-bold text-muted-foreground">БЕСПЛАТНОЕ КАЗИНО</h2>
+          <div className="flex items-center justify-center w-full h-12">
+            <div className="flex items-center justify-center w-12 h-12 bg-primary rounded-full">
+              <Image src="/copy.png" alt="copy" className="w-6 h-6" width={24} height={24} />
+            </div>
+            <span className="text-sm text-muted-foreground ml-2 py-3 px-2 bg-card rounded-xl">https://t.me/ShiruChatBot/ShiruApp/casino/free</span>
+          </div>
         </div>
       </div>
     </div>
