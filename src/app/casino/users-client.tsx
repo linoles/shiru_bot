@@ -321,8 +321,9 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     min={100}
                     placeholder={`Введите ставку... (${curUser.casinoBet})`}
                     className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[60%] text-start bg-card rounded-xl shadow-sm"
+                    style={{padding: '0.75rem'}}
                   />
-                  <input type="submit" value="Поставить" className="p-3 w-[40%] bg-primary text-card-foreground rounded-lg" />
+                  <input type="submit" value="Поставить" className="p-3 w-[40%] bg-primary text-card-foreground rounded-lg" style={{padding: '0.75rem'}} />
                 </div>
               </form>
             </div>
