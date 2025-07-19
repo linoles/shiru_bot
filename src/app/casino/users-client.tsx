@@ -228,12 +228,12 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   }, [tgData, users]);
 
   return (
-    <div id="root">
+    <div id="root" className="overflow-hidden overflow-x-hidden overflow-y-hidden">
       <div role="region" aria-label="Notifications (F8)" tabIndex={-1} style={{ pointerEvents: "none" }}>
         <ol tabIndex={-1} className="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"></ol>
       </div>
       <section aria-label="Notifications alt+T" tabIndex={-1} aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section>
-      <div className="min-h-screen bg-background text-foreground dark">
+      <div className="min-h-screen bg-background text-foreground dark overflow-hidden overflow-x-hidden overflow-y-hidden">
         <div className="flex items-center justify-center p-4 border-b border-border">
           <div className="flex items-center space-x-2">
             <h1 className="text-2xl font-bold cursor-pointer" onClick={() => alert(`Вход выполнен через: ${tgData?.username ? `@${tgData.username} (id${tgData?.id})` : `${tgData?.first_name} (id${tgData?.id})`}`)}>
@@ -327,16 +327,16 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                   input.value = '';
                 }}
               >
-                <div className="w-[calc(100%-4px)] border-primary mx-1 mt-1 text-center border-primary/50 focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 space-x-2 flex flex-row justify-between">
+                <div className="w-[calc(100%-4px)] border-primary mx-1 mt-1 text-center border-primary/50 focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 space-x-1 flex flex-row justify-between">
                   <input
                     type="number"
                     max={curUser.points}
                     min={100}
                     placeholder="Введите ставку..."
-                    className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[55%] text-start bg-card rounded-xl shadow-sm mr-1"
+                    className="hover:border-0 focus:border-0 focus:outline-none p-3 w-[55%] text-start bg-card rounded-xl shadow-sm"
                     style={{ padding: '0.75rem' }}
                   />
-                  <input type="submit" value="Поставить" className="ml-1 p-3 w-[35%] bg-primary text-card-foreground rounded-lg" style={{ padding: '0.75rem' }} />
+                  <input type="submit" value="Поставить" className="p-3 w-[35%] bg-primary text-card-foreground rounded-lg" style={{ padding: '0.75rem' }} />
                 </div>
               </form>
             </div>
