@@ -102,7 +102,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
 
   useEffect(() => {
     if (scrollContainerRef.current) {
-      // Вычисляем середину контейнера для прокрутки
       const scrollWidth = scrollContainerRef.current.scrollWidth;
       const clientWidth = scrollContainerRef.current.clientWidth;
       scrollContainerRef.current.scrollLeft = (scrollWidth - clientWidth) / 2;
@@ -321,20 +320,22 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     return;
                   }
                   curUser.casinoBet = input.valueAsNumber;
+                  setCurUser({ ...curUser });
                   window.Telegram.WebApp.SecondaryButton.setParams({ text: `Крутить ($${curUser.casinoBet} очков)` })
                   const response = await fetch('/api/save-user', {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(curUser),
+                    body: JSON.stringify({
+                      curUser,
+                      casinoBet: input.valueAsNumber
+                    }),
                   });
                   if (!response.ok) {
                     alert(`Ошибка при сохранении ставки! ${response.statusText}`);
                     return;
                   }
-                  const newUser = await response.json();
-                  setCurUser(newUser);
                   input.value = '';
                 }}
               >
