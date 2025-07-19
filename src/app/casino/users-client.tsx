@@ -335,13 +335,21 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                       casinoBet: input.valueAsNumber
                     }),
                   });
-
                   if (!response.ok) {
                     alert(`Ошибка при сохранении ставки! ${response.statusText}`);
                     console.info(response, curUser);
                     return;
                   }
-                  setCurUser(prev => ({ ...prev, casinoBet: input.valueAsNumber }));
+                  setCurUser(prev => ({
+                    tgId: prev.tgId,
+                    tgUsername: prev.tgUsername,
+                    tgNick: prev.tgNick,
+                    points: prev.points,
+                    lvl: prev.lvl,
+                    points_from: prev.points_from,
+                    casinoBet: input.valueAsNumber
+                  }));
+                  curUser.casinoBet = input.valueAsNumber
                   input.value = '';
                 }}
               >
