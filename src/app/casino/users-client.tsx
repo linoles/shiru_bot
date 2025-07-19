@@ -286,13 +286,45 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                   ${Math.floor(curUser.points)}
                 </div>
               </div>
-              <input
-                type="number"
-                max={curUser.points}
-                min={100}
-                placeholder={`Введите ставку... (${curUser.casinoBet})`}
-                className="w-full bg-card rounded-xl border-primary shadow-sm p-3 text-center py-6 border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 hover:border-0 focus:border-0"
-              />
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  const target = e.target as HTMLFormElement;
+                  const input = target.querySelector('input[type="number"]') as HTMLInputElement;
+                  if (input.valueAsNumber > curUser.points) {
+                    alert('Ставка не может быть больше, чем у вас есть на счету!');
+                    return;
+                  }
+                  const response = await fetch('/api/save-user', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                      ...curUser,
+                      casinoBet: input.valueAsNumber,
+                    }),
+                  });
+                  if (!response.ok) {
+                    alert('Ошибка при сохранении ставки!');
+                    return;
+                  }
+                  const newUser = await response.json();
+                  setCurUser(newUser);
+                  input.value = '';
+                }}
+              >
+                <div className="w-[calc(100%-4px)] bg-card rounded-xl border-primary shadow-sm p-3 text-center py-6 border-primary/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2">
+                  <input
+                    type="number"
+                    max={curUser.points}
+                    min={100}
+                    placeholder={`Введите ставку... (${curUser.casinoBet})`}
+                    className="hover:border-0 focus:border-0 py-3 w-[60%] text-start"
+                  />
+                  <input type="submit" value="Поставить" className="py-3 w-[40%] bg-primary text-card-foreground rounded-lg" />
+                </div>
+              </form>
             </div>
           </div>
         </div>
