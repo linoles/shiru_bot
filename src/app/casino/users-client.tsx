@@ -278,7 +278,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             </div>
             <h3 className="text-lg font-bold text-muted-foreground">СТАВКА</h3>
             <div className="w-screen flex flex-col space-y-2">
-              <div className="w-full flex overflow-x-auto items-center justify-between space-x-2 mx-1 sc-left">
+              <div className="w-full flex overflow-x-auto items-center justify-between space-x-2 mx-1">
                 <div className="flex-shrink-0 w-24 shadow-sm p-3 text-center bg-card rounded-xl border-primary border-primary/50">
                   ${Math.floor(curUser.points / 5)}
                 </div>
@@ -308,15 +308,13 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     alert('Ставка должна быть целым числом!');
                     return;
                   }
+                  curUser.casinoBet = input.valueAsNumber;
                   const response = await fetch('/api/save-user', {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                      ...curUser,
-                      casinoBet: input.valueAsNumber,
-                    }),
+                    body: JSON.stringify(curUser),
                   });
                   if (!response.ok) {
                     alert(`Ошибка при сохранении ставки! ${response.statusText}`);

@@ -286,7 +286,3 @@ h1 {
 .bg-stone\/10 {
   background-color: #D3D3D3;
 }
-
-.sc-left {
-  scroll-margin-left: calc(50% - 12px);
-}
