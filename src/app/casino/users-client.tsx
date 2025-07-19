@@ -144,20 +144,20 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               setRes("x1 (=0$)");
               setResColor("stone");
             } else if (payout >= 33 && payout <= 48) {
-              setRes("x1.45 (+45$)");
+              setRes("x1.4 (+40$)");
               setResColor("green");
-              curUser.points += 45;
-              curUser.points_from.casino += 45;
+              curUser.points += 40;
+              curUser.points_from.casino += 40;
             } else if (payout >= 49 && payout < 64) {
-              setRes("x1.9 (+90$)");
+              setRes("x1.8 (+80$)");
               setResColor("green");
-              curUser.points += 90;
-              curUser.points_from.casino += 90
+              curUser.points += 80;
+              curUser.points_from.casino += 80;
             } else {
-              setRes("х3 (+200$)");
+              setRes("х5 (+400$)");
               setResColor("green");
-              curUser.points += 200;
-              curUser.points_from.casino += 200
+              curUser.points += 400;
+              curUser.points_from.casino += 400;
             }
             const response = await fetch('/api/save-user', {
               method: 'POST',
@@ -266,13 +266,22 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               <div className={`font-semibold text-xl py-0.5 inline-flex items-center rounded-full border px-2.5 mt-2 mr-2 transition-colors focus:outline-none focus:ring-2 focus:ring-${resColor} focus:ring-offset-2 hover:bg-${resColor}/80 bg-${resColor}/10 text-${resColor} border-${resColor}/20`}>{res}</div>
             </div>
             <h3 className="text-lg font-bold text-muted-foreground">СТАВКА</h3>
-            <div className="w-screen flex items-center justify-center mx-4 flex-row space-x-2">
-              <div className="shadow-sm p-3 text-center bg-card rounded-xl border-primary">{Math.floor(curUser.points / 3)}</div>
-              <div className="shadow-sm p-3 text-center bg-card rounded-xl border-primary">{Math.floor(curUser.points / 2)}</div>
-              <div className="shadow-sm p-3 text-center bg-card rounded-xl border-primary">{Math.floor(curUser.points)}</div>
-            </div>
-            <div>
-              <input type="text" className="bg-card rounded-xl border-primary shadow-sm p-3 text-center" />
+            <div className="w-full flex flex-col space-y-2">
+              <div className="w-full flex items-center justify-between space-x-2">
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary">
+                  ${Math.floor(curUser.points / 3)}
+                </div>
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary">
+                  ${Math.floor(curUser.points / 2)}
+                </div>
+                <div className="w-full shadow-sm p-3 text-center bg-card rounded-xl border-primary">
+                  ${Math.floor(curUser.points)}
+                </div>
+              </div>
+              <input
+                type="text"
+                className="w-full bg-card rounded-xl border-primary shadow-sm p-3 text-center"
+              />
             </div>
           </div>
         </div>
