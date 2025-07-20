@@ -126,6 +126,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             sb.enable();
             const curUser = users.find(u => u.tgId === window.Telegram?.WebApp.initDataUnsafe?.user.id);
             if (!curUser) return;
+            if (curUser.freeCasinoProps.done >= 3) return;
             const payout = payouts[newRandChoices.join('')];
             curUser.freeCasinoProps.points += payout;
             curUser.freeCasinoProps.done += 1;
@@ -170,6 +171,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         sb.enable();
         const curUser = users.find(u => u.tgId === window.Telegram?.WebApp.initDataUnsafe?.user.id);
         if (!curUser) return;
+        if (curUser.freeCasinoProps.done >= 3) return;
         const payout = payouts[newRandChoices.join('')];
         curUser.freeCasinoProps.points += payout;
         curUser.freeCasinoProps.done += 1;
