@@ -33,7 +33,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
 
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
-    console.info('start_param', window.Telegram?.WebApp?.initData?.startParam);
+    alert('start_param: ' + tg?.startParam);
     if (tg) {
       tg.requestFullscreen();
       setTgData(tg.initDataUnsafe?.user);
@@ -45,7 +45,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     if (!tgData?.id) return
 
     const checkAndAddUser = async () => {
-      const exists = users.some(u => u.tgId === tgData.id)
+      const exists = users.some(u => u.tgId === tgData.id);
       if (!exists) {
         const response = await fetch('/api/add-user', {
           method: 'POST',
