@@ -52,7 +52,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             tgId: tgData.id,
             tgNick: tgData.first_name,
             tgUsername: tgData.username,
-            points: 0,
+            points: 10000,
             lvl: 1,
             points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 },
             casinoBet: 100,
