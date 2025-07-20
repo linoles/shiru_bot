@@ -118,18 +118,15 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
           sb.enable();
           sb.setParams({ text: "Крутить 🎰" });
           sb.onClick(async () => {
-            sb.disable();
             setInt(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`/${choice}.png`} className="w-[60%]"></img></div>)));
+            sb.disable();
             await new Promise(resolve => setTimeout(resolve, 2000));
             const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
             setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`/${choice}.png`} className="w-[60%]"></img></div>)));
             sb.enable();
             const curUser = users.find(u => u.tgId === window.Telegram?.WebApp.initDataUnsafe?.user.id);
             if (!curUser) return;
-            if (curUser.freeCasinoProps.done >= 3) {
-              alert("Вы уже покрутили бесплатное казино три раза! Ожидайте окончания игры.");
-              return;
-            }
+            if (curUser.freeCasinoProps.done >= 3) return;
             const payout = payouts[newRandChoices.join('')];
             curUser.freeCasinoProps.points += payout;
             curUser.freeCasinoProps.done += 1;
@@ -166,18 +163,15 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       sb.enable();
       sb.setParams({ text: "Крутить 🎰" });
       sb.onClick(async () => {
-        sb.disable();
         setInt(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`/${choice}.png`} className="w-[60%]"></img></div>)));
+        sb.disable();
         await new Promise(resolve => setTimeout(resolve, 2000));
         const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
         setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`/${choice}.png`} className="w-[60%]"></img></div>)));
         sb.enable();
         const curUser = users.find(u => u.tgId === window.Telegram?.WebApp.initDataUnsafe?.user.id);
         if (!curUser) return;
-        if (curUser.freeCasinoProps.done >= 3) {
-          alert("Вы уже покрутили бесплатное казино три раза! Ожидайте окончания игры.");
-          return;
-        }
+        if (curUser.freeCasinoProps.done >= 3) return;
         const payout = payouts[newRandChoices.join('')];
         curUser.freeCasinoProps.points += payout;
         curUser.freeCasinoProps.done += 1;
@@ -237,6 +231,15 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     checkAndAddUser()
   }, [tgData, users]);
 
+  const getRemainTime = (users: User[]) => {
+    const me = users.find(user => user.tgId === 7441988500);
+    if (me) {
+      return `${Date.now() - me.lastFreeCasino}s`;
+    } else {
+      return 0;
+    }
+  }
+
   return (
     <div id="root" className="overflow-hidden overflow-x-hidden overflow-y-hidden">
       <div role="region" aria-label="Notifications (F8)" tabIndex={-1} style={{ pointerEvents: "none" }}>
@@ -289,6 +292,11 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                 {int}
               </div>
             </div>
+          </div>
+          <div className="text-muted-foreground py-3 px-2 bg-card rounded-2xl w-full border border-border flex flex-row items-center justify-between">
+            <div className="text-center text-lg flex flex-col items-center justify-center border-r-2 border-border w-[33%] h-full font-bold">{users.filter(user => user.freeCasinoProps.done > 0).length} 👥</div>
+            <div className="text-center text-lg flex flex-col items-center justify-center border-r-2 border-border w-[33%] h-full font-bold">{curUser.freeCasinoProps.points} 🍀</div>
+            <div className="text-center text-lg flex flex-column items-center justify-center w-[33%] h-full font-bold">{getRemainTime(users)} ⏳</div>
           </div>
         </div>
       </div>
