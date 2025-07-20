@@ -107,7 +107,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       const me = users.find(user => user.tgId === 7441988500);
       console.info(Date.now());
       if (!me) return;
-      if (!me.freeCasinoNow && me.lastFreeCasino + 300 >= Date.now()) {
+      if (!me.freeCasinoNow && me.lastFreeCasino + 7200 <= Date.now()) {
         const mb = tg.MainButton;
         mb.enable();
         mb.setParams({ text: "Начать игру 🕹" });
@@ -125,7 +125,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         });
         mb.show();
       }
-      if (!(me.freeCasinoNow && me.lastFreeCasino + 300 >= Date.now())) return;
+      if (!(me.freeCasinoNow && me.lastFreeCasino + 300 <= Date.now())) return;
       const sb = tg.SecondaryButton;
       sb.enable();
       sb.setParams({ text: "Крутить 🎰" });
