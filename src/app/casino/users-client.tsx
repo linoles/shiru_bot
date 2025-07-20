@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import "@/src/app/globals.css";
+import { CasinoProps, Points_from } from '../users-client';
 
 declare global {
   interface Window {
@@ -9,9 +10,6 @@ declare global {
   }
 }
 
-export interface Points_from {
-  [key: string]: number;
-}
 export interface User {
   tgId: number;
   tgNick: string;
@@ -20,11 +18,14 @@ export interface User {
   lvl: number;
   points_from: Points_from;
   casinoBet: number;
+  lastFreeCasino: number;
+  freeCasinoNow: boolean;
+  freeCasinoProps: CasinoProps
 }
 
 export default function ClientComponent({ initialUsers }: { initialUsers: User[] }) {
   const [users, setUsers] = useState<User[]>(initialUsers);
-  const [curUser, setCurUser] = useState<User>({ tgId: 0, tgNick: '', tgUsername: '', points: 0, lvl: 1, points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 }, casinoBet: 100 });
+  const [curUser, setCurUser] = useState<User>({ tgId: 0, tgNick: '', tgUsername: '', points: 0, lvl: 1, points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 }, casinoBet: 100, lastFreeCasino: 0, freeCasinoNow: false, freeCasinoProps: { done: 0, points: 0 } });
   const [tgData, setTgData] = useState<any>(null);
 
   const symbols = ['🍇', '🍋', 'BAR', '7️⃣'];
@@ -97,7 +98,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
 
   let [res, setRes] = useState("x1 (=0$)");
   let [resColor, setResColor] = useState("stone");
-  let [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.png`} className="w-[60%]"></img></div>)))
+  let [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.png`} className="w-[60%]"></img></div>)));
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -215,7 +216,11 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             tgUsername: tgData.username,
             points: 0,
             lvl: 1,
-            points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 }
+            points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 },
+            casinoBet: 100,
+            lastFreeCasino: 0,
+            freeCasinoNow: false,
+            freeCasinoProps: { done: 0, points: 0 }
           })
         })
         const newUser = await response.json()
@@ -264,7 +269,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       points: prev.points,
       lvl: prev.lvl,
       points_from: prev.points_from,
-      casinoBet: bet
+      casinoBet: bet,
+      lastFreeCasino: prev.lastFreeCasino,
+      freeCasinoNow: prev.freeCasinoNow,
+      freeCasinoProps: prev.freeCasinoProps
     }));
     curUser.casinoBet = bet;
     setUsers(prev => prev.map(u => u.tgId === curUser.tgId ? curUser : u));
@@ -381,7 +389,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
                     points: prev.points,
                     lvl: prev.lvl,
                     points_from: prev.points_from,
-                    casinoBet: input.valueAsNumber
+                    casinoBet: input.valueAsNumber,
+                    lastFreeCasino: prev.lastFreeCasino,
+                    freeCasinoNow: prev.freeCasinoNow,
+                    freeCasinoProps: prev.freeCasinoProps
                   }));
                   curUser.casinoBet = input.valueAsNumber;
                   setUsers(prev => prev.map(u => u.tgId === curUser.tgId ? curUser : u));

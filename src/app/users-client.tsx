@@ -11,6 +11,9 @@ declare global {
 export interface Points_from {
   [key: string]: number;
 }
+export interface CasinoProps {
+  [key: string]: number;
+}
 export interface User {
   tgId: number;
   tgNick: string;
@@ -19,6 +22,9 @@ export interface User {
   lvl: number;
   points_from: Points_from;
   casinoBet: number;
+  lastFreeCasino: number;
+  freeCasinoNow: boolean;
+  freeCasinoProps: CasinoProps
 }
 
 export default function ClientComponent({ initialUsers }: { initialUsers: User[] }) {
@@ -48,7 +54,12 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             tgNick: tgData.first_name,
             tgUsername: tgData.username,
             points: 0,
-            lvl: 1
+            lvl: 1,
+            points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 },
+            casinoBet: 100,
+            lastFreeCasino: 0,
+            freeCasinoNow: false,
+            freeCasinoProps: { done: 0, points: 0 }
           })
         })
         const newUser = await response.json()
