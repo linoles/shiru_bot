@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import "@/src/app/globals.css";
 import Image from 'next/image';
 import { CasinoProps, Points_from } from '../../users-client';
@@ -95,7 +95,8 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     "7️⃣BAR🍇": 20,
     "🍇BAR🍇": 18
   }
-  let [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`/${choice}.png`} className="w-[60%]"></img></div>)));
+  const [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`/${choice}.png`} className="w-[60%]"></img></div>)));
+  const [remainTime, setRemainTime] = useState<String | 0>(0);
 
   useEffect(() => {
     try {
@@ -247,7 +248,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   if (me) {
     const remainFreeCasinoTime = Math.max(0, me.lastFreeCasino + 300000 - Date.now()) / 1000;
     const participants = users.filter(user => user.freeCasinoProps.done > 0);
-    if (remainFreeCasinoTime <= 0) {
+    if (remainFreeCasinoTime <= 0 && me.freeCasinoNow) {
       if (participants.length >= 5) {
         const winner = participants.sort((a, b) => b.freeCasinoProps.points - a.freeCasinoProps.points)[0];
         winner.points += winner.freeCasinoProps.points * 2;
@@ -304,6 +305,11 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         }
       };
       updateUser();
+    } else if (remainFreeCasinoTime > 0 && me.freeCasinoNow) {
+      React.useMemo(() => {
+        const timer = setInterval(() => setRemainTime(getRemainTime(users)), 1000);
+        return () => clearInterval(timer);
+      }, [users])
     }
   }
 
@@ -363,7 +369,9 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
           <div className="text-muted-foreground py-3 px-2 bg-card rounded-2xl w-full border border-border flex flex-row items-center justify-between">
             <div className="text-center text-lg flex flex-col items-center justify-center border-r-2 border-border w-[33%] h-full font-bold">{users.filter(user => user.freeCasinoProps.done > 0).length} 👥</div>
             <div className="text-center text-lg flex flex-col items-center justify-center border-r-2 border-border w-[33%] h-full font-bold">{curUser.freeCasinoProps.points} 🍀</div>
-            <div className="text-center text-lg flex flex-column items-center justify-center w-[33%] h-full font-bold">{getRemainTime(users)} ⏳</div>
+            <div className="text-center text-lg flex flex-column items-center justify-center w-[33%] h-full font-bold">
+              {remainTime} ⏳
+            </div>
           </div>
         </div>
       </div>
