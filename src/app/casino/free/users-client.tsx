@@ -315,6 +315,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         }, [users, me]);
       } catch (error) {
         console.error(error);
+        setRemainTime("5m 0s");
       }
     }
   }
