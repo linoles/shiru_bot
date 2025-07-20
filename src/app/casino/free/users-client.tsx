@@ -385,7 +385,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               <Image src="/2.png" alt="copy" className="w-10 h-10" width={24} height={24} />
             </div>
           </div>
-          <div className="flex items-center justify-center w-full h-12 mt-2">
+          <div className="flex items-center justify-center w-full h-12 mt-2 border-b border-border">
             <div className="flex items-center justify-center w-12 h-12 bg-red rounded-full min-w-[48px]">
               <Image src="/3.png" alt="copy" className="w-10 h-10" width={24} height={24} />
             </div>
