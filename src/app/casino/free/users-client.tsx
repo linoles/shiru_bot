@@ -379,6 +379,18 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             </div>
             <span className="text-sm text-muted-foreground ml-2 py-3 px-2 bg-inherit min-w-[80vw] text-start max-w-[80vw] border-b border-border">FIRST PLACE | USERNAME | POINTS</span>
           </div>
+          <div className="flex items-center justify-center w-full h-12 mt-2">
+            <span className="text-sm text-muted-foreground ml-2 py-3 px-2 bg-inherit min-w-[80vw] text-start max-w-[80vw] border-b border-border">SECOND PLACE | USERNAME | POINTS</span>
+            <div className="flex items-center justify-center w-12 h-12 bg-primary rounded-full min-w-[48px]">
+              <Image src="/2.png" alt="copy" className="w-6 h-6" width={24} height={24} />
+            </div>
+          </div>
+          <div className="flex items-center justify-center w-full h-12 mt-2">
+            <div className="flex items-center justify-center w-12 h-12 bg-primary rounded-full min-w-[48px]">
+              <Image src="/3.png" alt="copy" className="w-6 h-6" width={24} height={24} />
+            </div>
+            <span className="text-sm text-muted-foreground ml-2 py-3 px-2 bg-inherit min-w-[80vw] text-start max-w-[80vw] border-b border-border">THIRD PLACE | USERNAME | POINTS</span>
+          </div>
         </div>
       </div>
     </div>
