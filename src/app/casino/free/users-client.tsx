@@ -306,10 +306,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       };
       updateUser();
     } else if (remainFreeCasinoTime > 0 && me.freeCasinoNow) {
-      React.useMemo(() => {
+      React.useEffect(() => {
         const timer = setInterval(() => setRemainTime(getRemainTime(users)), 1000);
         return () => clearInterval(timer);
-      }, [users])
+      }, [users, me])
     }
   }
 
