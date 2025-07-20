@@ -284,7 +284,26 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         })
         setUsers(prev => prev.map(u => u.tgId === user.tgId ? user : u));
       });
-      
+      me.freeCasinoNow = false;
+      const updateUser = async () => {
+        try {
+          const response = await fetch('/api/save-user', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(me),
+          });
+          if (!response.ok) {
+            const data = await response.json();
+            throw new Error(data.error || "Ошибка сервера");
+          }
+          setUsers(prev => prev.map(u => u.tgId === me.tgId ? me : u));
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      updateUser();
     }
   }
 
