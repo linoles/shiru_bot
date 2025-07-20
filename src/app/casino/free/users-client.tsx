@@ -234,7 +234,10 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   const getRemainTime = (users: User[]) => {
     const me = users.find(user => user.tgId === 7441988500);
     if (me) {
-      return `${Math.max(0, me.lastFreeCasino + 300000 - Date.now())}мс`;
+      const remainTime = Math.max(0, me.lastFreeCasino + 300000 - Date.now()) / 1000;
+      const minutes = Math.floor(remainTime / 60);
+      const seconds = Math.floor(remainTime % 60);
+      return `${minutes}m ${seconds}s`;
     } else {
       return 0;
     }
