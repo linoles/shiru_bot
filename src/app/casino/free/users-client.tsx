@@ -306,9 +306,11 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       };
       updateUser();
     } else if (remainFreeCasinoTime > 0 && me.freeCasinoNow) {
-      React.useEffect(() => {
-        const timer = setInterval(() => setRemainTime(getRemainTime(users)), 1000);
-        return () => clearInterval(timer);
+      const timer = useRef<number | undefined>(undefined);
+      useEffect(() => {
+        if (timer.current) clearInterval(timer.current);
+        timer.current = window.setInterval(() => setRemainTime(getRemainTime(users)), 1000);
+        return () => clearInterval(timer.current);
       }, [users, me])
     }
   }
