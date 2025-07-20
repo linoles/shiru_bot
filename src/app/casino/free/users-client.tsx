@@ -243,64 +243,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     }
   }
 
-  const me = users.find(user => user.tgId === 7441988500);
-  if (me) {
-    const remainFreeCasinoTime = Math.max(0, me.lastFreeCasino + 300000 - Date.now()) / 1000;
-    const participants = users.filter(user => user.freeCasinoProps.done > 0);
-    if (remainFreeCasinoTime <= 0) {
-      if (participants.length >= 5) {
-        const winner = participants.sort((a, b) => b.freeCasinoProps.points - a.freeCasinoProps.points)[0];
-        winner.points += winner.freeCasinoProps.points * 2;
-        fetch('/api/save-user', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(winner),
-        }).then((response) => {
-          if (!response.ok) {
-            response.json().then((data) => {
-              throw new Error(data.error || "Ошибка сервера")
-            })
-          }
-        })
-        setUsers(prev => prev.map(u => u.tgId === winner.tgId ? winner : u));
-      }
-      users.filter(user => user.freeCasinoProps.done > 0).forEach((user) => {
-        user.freeCasinoProps.done = 0;
-        user.freeCasinoProps.points = 0;
-        fetch('/api/save-user', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(user),
-        }).then((response) => {
-          if (!response.ok) {
-            response.json().then((data) => {
-              throw new Error(data.error || "Ошибка сервера")
-            })
-          }
-        })
-        setUsers(prev => prev.map(u => u.tgId === user.tgId ? user : u));
-      });
-      me.freeCasinoNow = false;
-      fetch('/api/save-user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(me),
-      }).then((response) => {
-        if (!response.ok) {
-          response.json().then((data) => {
-            throw new Error(data.error || "Ошибка сервера")
-          })
-        }
-      })
-      setUsers(prev => prev.map(u => u.tgId === me.tgId ? me : u));
-    }
-  }
+  
 
   return (
     <div id="root" className="overflow-hidden overflow-x-hidden overflow-y-hidden">
