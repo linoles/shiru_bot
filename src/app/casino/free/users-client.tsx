@@ -232,7 +232,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   }, [tgData, users]);
 
   const getRemainTime = (users: User[]) => {
-    const me = users.find(user => user.tgId === tgData?.id);
+    const me = users.find(user => user.tgId === 7441988500);
     if (me) {
       return Math.max(0, 86400000 - (Date.now() - me.lastFreeCasino));
     } else {
