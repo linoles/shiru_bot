@@ -235,7 +235,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     const me = users.find(user => user.tgId === 7441988500);
     if (me) {
       console.info(Date.now(), me);
-      return Date.now() - me.lastFreeCasino;
+      return (me.lastFreeCasino + 30000 - Date.now()) / 100;
     } else {
       return 0;
     }
