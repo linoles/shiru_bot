@@ -113,6 +113,38 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         mb.setParams({ text: "Начать игру 🕹" });
         mb.onClick(() => {
           mb.disable();
+          mb.hide();
+          const sb = tg.SecondaryButton;
+          sb.enable();
+          sb.setParams({ text: "Крутить 🎰" });
+          sb.onClick(async () => {
+            sb.disable();
+            setInt(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.png`} className="w-[60%]"></img></div>)));
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
+            setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`${choice}.png`} className="w-[60%]"></img></div>)));
+            sb.enable();
+            const curUser = users.find(u => u.tgId === window.Telegram?.WebApp.initDataUnsafe?.user.id);
+            if (!curUser) return;
+            const payout = payouts[newRandChoices.join('')];
+            curUser.freeCasinoProps.points += payout;
+            curUser.freeCasinoProps.done += 1;
+            const response = await fetch('/api/save-user', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(curUser),
+            })
+            if (!response.ok) {
+              const errorData = await response.json()
+              throw new Error(errorData.error || "Ошибка сервера")
+            }
+            const result = await response.json();
+            setCurUser(curUser);
+            setUsers(prev => prev.map(u => u.tgId === curUser.tgId ? curUser : u));
+          });
+          sb.show();
           me.freeCasinoNow = true;
           me.lastFreeCasino = Date.now();
           const response = fetch('/api/save-user', {
