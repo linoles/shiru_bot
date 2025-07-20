@@ -107,7 +107,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       const me = users.find(user => user.tgId === 7441988500);
       console.info(Date.now());
       if (!me) return;
-      if (!me.freeCasinoNow && me.lastFreeCasino + 7200 <= Date.now()) {
+      if (!me.freeCasinoNow && me.lastFreeCasino + 7200000 <= Date.now()) {
         const mb = tg.MainButton;
         mb.enable();
         mb.setParams({ text: "Начать игру 🕹" });
@@ -119,11 +119,11 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
           sb.setParams({ text: "Крутить 🎰" });
           sb.onClick(async () => {
             setInt(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`/${choice}.png`} className="w-[60%]"></img></div>)));
-            sb.disable();
+            tg.SecondaryButton.disable();
             await new Promise(resolve => setTimeout(resolve, 2000));
             const newRandChoices = [symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)], symbols[Math.floor(Math.random() * 4)]];
             setInt(newRandChoices.map((choice, index) => (<div key={index} className={`h-[30vw] w-full bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`/${choice}.png`} className="w-[60%]"></img></div>)));
-            sb.enable();
+            tg.SecondaryButton.enable();
             const curUser = users.find(u => u.tgId === window.Telegram?.WebApp.initDataUnsafe?.user.id);
             if (!curUser) return;
             if (curUser.freeCasinoProps.done >= 3) return;
@@ -158,7 +158,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         });
         mb.show();
       }
-      if (!(me.freeCasinoNow && me.lastFreeCasino + 300 <= Date.now())) return;
+      if (!me.freeCasinoNow) return;
       const sb = tg.SecondaryButton;
       sb.enable();
       sb.setParams({ text: "Крутить 🎰" });
@@ -247,25 +247,25 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   if (me) {
     const remainFreeCasinoTime = Math.max(0, me.lastFreeCasino + 300000 - Date.now()) / 1000;
     const participants = users.filter(user => user.freeCasinoProps.done > 0);
-    if (participants.length >= 5) {
-      const winner = participants.sort((a, b) => b.freeCasinoProps.points - a.freeCasinoProps.points)[0];
-      winner.points += winner.freeCasinoProps.points * 2;
-      fetch('/api/save-user', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(winner),
-      }).then((response) => {
-        if (!response.ok) {
-          response.json().then((data) => {
-            throw new Error(data.error || "Ошибка сервера")
-          })
-        }
-      })
-      setUsers(prev => prev.map(u => u.tgId === winner.tgId ? winner : u));
-    }
     if (remainFreeCasinoTime <= 0) {
+      if (participants.length >= 5) {
+        const winner = participants.sort((a, b) => b.freeCasinoProps.points - a.freeCasinoProps.points)[0];
+        winner.points += winner.freeCasinoProps.points * 2;
+        fetch('/api/save-user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(winner),
+        }).then((response) => {
+          if (!response.ok) {
+            response.json().then((data) => {
+              throw new Error(data.error || "Ошибка сервера")
+            })
+          }
+        })
+        setUsers(prev => prev.map(u => u.tgId === winner.tgId ? winner : u));
+      }
       users.filter(user => user.freeCasinoProps.done > 0).forEach((user) => {
         user.freeCasinoProps.done = 0;
         user.freeCasinoProps.points = 0;
@@ -284,6 +284,21 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         })
         setUsers(prev => prev.map(u => u.tgId === user.tgId ? user : u));
       });
+      me.freeCasinoNow = false;
+      fetch('/api/save-user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(me),
+      }).then((response) => {
+        if (!response.ok) {
+          response.json().then((data) => {
+            throw new Error(data.error || "Ошибка сервера")
+          })
+        }
+      })
+      setUsers(prev => prev.map(u => u.tgId === me.tgId ? me : u));
     }
   }
 
