@@ -306,17 +306,28 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       };
       updateUser();
     } else if (remainFreeCasinoTime > 0 && me.freeCasinoNow) {
-      try {
-        const timer = useRef<number | undefined>(undefined);
-        useEffect(() => {
+      const timer = useRef<number | undefined>(undefined);
+
+      useEffect(() => {
+        try {
           if (timer.current) clearInterval(timer.current);
-          timer.current = window.setInterval(() => setRemainTime(getRemainTime(users)), 1000);
-          return () => clearInterval(timer.current);
-        }, [users, me]);
-      } catch (error) {
-        console.error(error);
-        setRemainTime("5m 0s");
-      }
+          timer.current = window.setInterval(() => {
+            try {
+              setRemainTime(getRemainTime(users));
+            } catch (error) {
+              console.error("Error in interval callback:", error);
+              setRemainTime("5m 0s");
+            }
+          }, 1000);
+
+          return () => {
+            if (timer.current) clearInterval(timer.current);
+          };
+        } catch (error) {
+          console.error("Error setting up interval:", error);
+          setRemainTime("5m 0s");
+        }
+      }, [users, me]);
     }
   }
 
