@@ -34,9 +34,11 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
     if (tg) {
-      const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
-      if (startParam.startsWith("freeCasino")) {
-        location.href = "/casino/free";
+      const startParam = window.Telegram.WebApp.initDataUnsafe?.start_param;
+      if (startParam && startParam !== null) {
+        if (startParam.startsWith("freeCasino")) {
+          location.href = "/casino/free";
+        }
       }
       tg.requestFullscreen();
       setTgData(tg.initDataUnsafe?.user);
