@@ -1,6 +1,6 @@
-import { createClient } from '@/utils/supabase/server'
-import { cookies } from 'next/headers'
-import ClientComponent from '@/src/app/users-client'
+import { createClient } from '@/utils/supabase/server';
+import { cookies } from 'next/headers';
+import ClientComponent from '@/src/app/rsp/users-client';
 
 export default async function UsersServer() {
   const supabase = await createClient(cookies());
