@@ -44,7 +44,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       setTgData(tg.initDataUnsafe?.user);
       tg.BackButton.hide();
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (!tgData?.id) return
@@ -73,7 +73,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     }
 
     checkAndAddUser()
-  }, [tgData, users])
+  }, [tgData, users]);
 
   return (
     <div id="root">
