@@ -96,7 +96,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     "🍇BAR🍇": 18
   }
   const [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`/${choice}.png`} className="w-[60%]"></img></div>)));
-  const [remainTime, setRemainTime] = useState<String | 0>(0);
 
   useEffect(() => {
     try {
@@ -232,17 +231,26 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     checkAndAddUser()
   }, [tgData, users]);
 
-  const getRemainTime = (users: User[]) => {
-    const me = users.find(user => user.tgId === 7441988500);
-    if (me) {
-      const remainTime = Math.max(0, me.lastFreeCasino + 300000 - Date.now()) / 1000;
-      const minutes = Math.floor(remainTime / 60);
-      const seconds = Math.floor(remainTime % 60);
-      return `${minutes}m ${seconds}s`;
-    } else {
-      return 0;
-    }
-  }
+  const [currentTime, setCurrentTime] = useState(Date.now());
+
+  const getRemainingTime = () => {
+    if (!me || !me.lastFreeCasino) return "5m 0s";
+    
+    const remainingMs = Math.max(0, me.lastFreeCasino + 300000 - currentTime);
+    const minutes = Math.floor(remainingMs / 60000);
+    const seconds = Math.floor((remainingMs % 60000) / 1000);
+    
+    return `${minutes}m ${seconds}s`;
+  };
+
+  useEffect(() => {
+    const frameId = requestAnimationFrame(function updateTime() {
+      setCurrentTime(Date.now());
+      requestAnimationFrame(updateTime);
+    });
+    
+    return () => cancelAnimationFrame(frameId);
+  }, []);
 
   const me = users.find(user => user.tgId === 7441988500);
   if (me) {
@@ -305,24 +313,6 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
         }
       };
       updateUser();
-    } else if (remainFreeCasinoTime > 0 && me.freeCasinoNow) {
-      const timer = useRef<number | null>(null);
-
-      useEffect(() => {
-        const updateRemainTime = () => setRemainTime(getRemainTime(users));
-
-        if (timer.current !== null) {
-          clearInterval(timer.current);
-        }
-
-        timer.current = window.setInterval(updateRemainTime, 1000);
-
-        return () => {
-          if (timer.current !== null) {
-            clearInterval(timer.current);
-          }
-        };
-      }, [users, me]);
     }
   }
 
@@ -383,7 +373,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             <div className="text-center text-lg flex flex-col items-center justify-center border-r-2 border-border w-[33%] h-full font-bold">{users.filter(user => user.freeCasinoProps.done > 0).length} 👥</div>
             <div className="text-center text-lg flex flex-col items-center justify-center border-r-2 border-border w-[33%] h-full font-bold">{curUser.freeCasinoProps.points} 🍀</div>
             <div className="text-center text-lg flex flex-column items-center justify-center w-[33%] h-full font-bold">
-              {remainTime} ⏳
+              {getRemainingTime()} ⏳
             </div>
           </div>
           <div className="flex items-center justify-center w-full h-12 mt-2">
