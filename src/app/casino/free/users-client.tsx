@@ -235,11 +235,11 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
 
   const getRemainingTime = () => {
     if (!me || !me.lastFreeCasino) return "5m 0s";
-    
+
     const remainingMs = Math.max(0, me.lastFreeCasino + 300000 - currentTime);
     const minutes = Math.floor(remainingMs / 60000);
     const seconds = Math.floor((remainingMs % 60000) / 1000);
-    
+
     return `${minutes}m ${seconds}s`;
   };
 
@@ -248,7 +248,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       setCurrentTime(Date.now());
       requestAnimationFrame(updateTime);
     });
-    
+
     return () => cancelAnimationFrame(frameId);
   }, []);
 
@@ -370,10 +370,17 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             </div>
           </div>
           <div className="text-muted-foreground py-3 px-2 bg-card rounded-2xl w-full border border-border flex flex-row items-center justify-between">
-            <div className="text-center text-lg flex flex-col items-center justify-center border-r-2 border-border w-[33%] h-full font-bold">{users.filter(user => user.freeCasinoProps.done > 0).length} 👥</div>
-            <div className="text-center text-lg flex flex-col items-center justify-center border-r-2 border-border w-[33%] h-full font-bold">{curUser.freeCasinoProps.points} 🍀</div>
-            <div className="text-center text-lg flex flex-column items-center justify-center w-[33%] h-full font-bold">
-              {getRemainingTime()} ⏳
+            <div className="text-center text-lg flex flex-row items-center justify-center border-r-2 border-border w-[33%] h-full font-bold space-x-2">
+              <span>{users.filter(user => user.freeCasinoProps.done > 0).length}</span>
+              <img src="/people.png" alt="people" className="w-6 h-6" />
+            </div>
+            <div className="text-center text-lg flex flex-row items-center justify-center border-r-2 border-border w-[33%] h-full font-bold space-x-2">
+              <span>{curUser.freeCasinoProps.points}</span>
+              <img src="/points.png" alt="points" className="w-4 h-4" />
+            </div>
+            <div className="text-center text-lg flex flex-row items-center justify-center w-[33%] h-full font-bold space-x-2">
+              <span>{getRemainingTime()}</span>
+              <img src="/time.png" alt="time" className="w-4 h-4" />
             </div>
           </div>
           <div className="flex items-center justify-center w-full h-12 mt-2">
