@@ -357,8 +357,8 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
           </div>
           <h2 className="text-lg font-bold text-muted-foreground">БЕСПЛАТНОЕ КАЗИНО</h2>
           <div className="flex items-center justify-center w-full h-12">
-            <span className="text-sm text-muted-foreground mr-2 py-3 px-2 bg-card rounded-xl max-w-[80vw] overflow-hidden text-ellipsis whitespace-nowrap border border-border">{`https://t.me/ShiruChatBot/ShiruApp/casino/free/vklnvclkkzvnlcxnvxnj`}...</span>
-            <div className="flex items-center justify-center w-12 h-12 bg-primary rounded-full min-w-[48px]">
+            <span className="text-sm text-muted-foreground mr-2 py-3 px-2 bg-card rounded-xl max-w-[80vw] overflow-hidden text-ellipsis whitespace-nowrap border border-border">{`https://t.me/ShiruChatBot?startapp=freeCasino${curUser.tgId}`}...</span>
+            <div className="flex items-center justify-center w-12 h-12 bg-primary rounded-full min-w-[48px]" onClick={() => navigator.clipboard.writeText(`https://t.me/ShiruChatBot?startapp=freeCasino${curUser.tgId}`)}>
               <Image src="/copy.png" alt="copy" className="w-6 h-6" width={24} height={24} />
             </div>
           </div>
