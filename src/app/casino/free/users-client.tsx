@@ -97,6 +97,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   }
   const [int, setInt] = useState(rand_choices.map((choice, index) => (<div key={index} className={`h-[30vw] w-[30vw] bg-card rounded-3xl text-5xl flex items-center justify-center ${choice}`}><img src={`/${choice}.png`} className="w-[60%]"></img></div>)));
   const [remainTime, setRemainTime] = useState<String | 0>(0);
+  const timer = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     try {
@@ -232,17 +233,33 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
     checkAndAddUser()
   }, [tgData, users]);
 
-  const getRemainTime = (users: User[]) => {
-    const me = users.find(user => user.tgId === 7441988500);
-    if (me) {
-      const remainTime = Math.max(0, me.lastFreeCasino + 300000 - Date.now()) / 1000;
-      const minutes = Math.floor(remainTime / 60);
-      const seconds = Math.floor(remainTime % 60);
+  const getRemainTimeSafe = (users: User[]) => {
+    try {
+      const me = users.find(user => user.tgId === 7441988500);
+
+      if (!me || !me.lastFreeCasino) {
+        return "5m 0s";
+      }
+
+      const currentTime = Date.now();
+      const lastCasinoTime = Number(me.lastFreeCasino);
+
+      if (isNaN(lastCasinoTime)) {
+        return "5m 0s";
+      }
+
+      const remainMs = Math.max(0, lastCasinoTime + 300000 - currentTime);
+      const remainSeconds = Math.floor(remainMs / 1000);
+
+      const minutes = Math.floor(remainSeconds / 60);
+      const seconds = remainSeconds % 60;
+
       return `${minutes}m ${seconds}s`;
-    } else {
-      return 0;
+    } catch (error) {
+      console.error("Error in getRemainTime:", error);
+      return "5m 0s";
     }
-  }
+  };
 
   const me = users.find(user => user.tgId === 7441988500);
   if (me) {
@@ -306,28 +323,29 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
       };
       updateUser();
     } else if (remainFreeCasinoTime > 0 && me.freeCasinoNow) {
-      const timer = useRef<number | undefined>(undefined);
-
       useEffect(() => {
-        try {
-          if (timer.current) clearInterval(timer.current);
-          timer.current = window.setInterval(() => {
-            try {
-              setRemainTime(getRemainTime(users));
-            } catch (error) {
-              console.error("Error in interval callback:", error);
-              setRemainTime("5m 0s");
-            }
-          }, 1000);
+        const updateTimer = () => {
+          setRemainTime(getRemainTimeSafe(users));
+        };
 
-          return () => {
-            if (timer.current) clearInterval(timer.current);
-          };
-        } catch (error) {
-          console.error("Error setting up interval:", error);
-          setRemainTime("5m 0s");
+        // Очищаем предыдущий таймер
+        if (timer.current) {
+          clearInterval(timer.current);
         }
-      }, [users, me]);
+
+        // Устанавливаем новый таймер
+        timer.current = setInterval(updateTimer, 1000);
+
+        // Первоначальное обновление
+        updateTimer();
+
+        // Очистка при размонтировании
+        return () => {
+          if (timer.current) {
+            clearInterval(timer.current);
+          }
+        };
+      }, [users]); // Зависимость только от users
     }
   }
 
