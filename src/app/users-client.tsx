@@ -32,9 +32,12 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   const [tgData, setTgData] = useState<any>(null);
   
   useEffect(() => {
-    alert(window.Telegram.WebApp.initDataUnsafe.start_param);
     const tg = window.Telegram?.WebApp;
     if (tg) {
+      const startParam = window.Telegram.WebApp.initDataUnsafe.start_param;
+      if (startParam.startsWith("freeCasino")) {
+        location.href = "/casino/free";
+      }
       tg.requestFullscreen();
       setTgData(tg.initDataUnsafe?.user);
       tg.BackButton.hide();
