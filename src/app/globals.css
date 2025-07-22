@@ -291,3 +291,16 @@ h1 {
 .bg-stone\/10 {
   background-color: #D3D3D3;
 }
+
+.wood-animation {
+  position: relative;
+  overflow: hidden;
+}
+
+.wood-animation img {
+  transition: transform 2.5s ease-in-out;
+}
+
+.wood-animation.hide-wood img {
+  transform: translateY(100%);
+}

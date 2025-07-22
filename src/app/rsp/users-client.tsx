@@ -27,13 +27,20 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   const [users, setUsers] = useState<User[]>(initialUsers);
   const [curUser, setCurUser] = useState<User>({ tgId: 0, tgNick: '', tgUsername: '', points: 0, lvl: 1, points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 }, casinoBet: 100, lastFreeCasino: 0, freeCasinoNow: false, freeCasinoProps: { done: 0, points: 0 } });
   const [tgData, setTgData] = useState<any>(null);
+  const [choiceIcons, setChoiceIcons] = useState<string[]>(["wood", "wood", "wood", "33"]);
+  const [hideWood, setHideWood] = useState(false);
 
   useEffect(() => {
-    const tg = window.Telegram?.WebApp;
-    if (tg) {
-      tg.requestFullscreen();
-      setTgData(tg.initDataUnsafe?.user);
-      tg.BackButton.hide();
+    try {
+      const tg = window.Telegram?.WebApp;
+      console.info(tg);
+      if (tg && tg != null) {
+        tg.requestFullscreen();
+        setTgData(tg.initDataUnsafe?.user);
+        tg.BackButton.hide();
+      }
+    } catch (error) {
+      console.error(error);
     }
   }, []);
 
@@ -58,16 +65,26 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
             freeCasinoProps: { done: 0, points: 0 }
           })
         })
-        const newUser = await response.json()
-        setUsers(prev => [...prev, newUser])
+        const newUser = await response.json();
+        setUsers(prev => [...prev, newUser]);
+        setCurUser(newUser);
+      } else {
+        setCurUser(users.find(u => u.tgId === tgData?.id)!);
       }
     }
 
     checkAndAddUser()
   }, [tgData, users]);
 
+  const choiceHandler = (choice: string) => {
+    setHideWood(false);
+    setTimeout(() => {
+      setChoiceIcons(["wood", "wood", "wood", "33"]);
+    }, 2500);
+  }
+
   return (
-    <div id="root">
+    <div id="root" className="overflow-hidden">
       <div role="region" aria-label="Notifications (F8)" tabIndex={-1} style={{ pointerEvents: "none" }}>
         <ol tabIndex={-1} className="fixed top-0 z-[100] flex max-h-screen w-full flex-col-reverse p-4 sm:bottom-0 sm:right-0 sm:top-auto sm:flex-col md:max-w-[420px]"></ol>
       </div>
@@ -105,7 +122,36 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               </div>
             </div>
           </div>
-          <h2 className="text-lg font-bold mb-4 text-muted-foreground">КАМЕНЬ, НОЖНИЦЫ, БУМАГА</h2>
+          <div className="w-full flex items-center justify-center">
+            <h2 className="text-lg font-bold mb-4 text-muted-foreground">КАМЕНЬ, НОЖНИЦЫ, БУМАГА</h2>
+          </div>
+          <div className="flex flex-1/3 flex-row items-center justify-around space-x-1 w-[calc(100vw-2rem)]">
+            <div
+              onClick={() => choiceHandler("rock")}
+              className={`w-[${choiceIcons[3]}%] cursor-pointer text-5xl flex items-center justify-center wood-animation ${hideWood ? 'hide-wood' : ''}`}
+              style={{ background: `url(/${choiceIcons[0]}.png) no-repeat center/75%` }}
+            >
+              <img src="/wood.png" alt="wood" className="w-full h-full cursor-pointer" />
+            </div>
+            <div
+              onClick={() => choiceHandler("scissors")}
+              className={`w-[${choiceIcons[3]}%] cursor-pointer text-5xl flex items-center justify-center wood-animation ${hideWood ? 'hide-wood' : ''}`}
+              style={{ background: `url(/${choiceIcons[1]}.png) no-repeat center/75%` }}
+            >
+              <img src="/wood.png" alt="scissors" className="w-full h-full cursor-pointer" />
+            </div>
+            <div
+              onClick={() => choiceHandler("paper")}
+              className={`w-[${choiceIcons[3]}%] cursor-pointer text-5xl flex items-center justify-center wood-animation ${hideWood ? 'hide-wood' : ''}`}
+              style={{ background: `url(/${choiceIcons[2]}.png) no-repeat center/75%` }}
+            >
+              <img src="/wood.png" alt="paper" className="w-full h-full cursor-pointer" />
+            </div>
+          </div>
+          <button onClick={() => {
+            setChoiceIcons(["rock", "scissors", "paper", "33"]);
+            setHideWood(true);
+          }}>PLAY</button>
         </div>
       </div>
     </div>
