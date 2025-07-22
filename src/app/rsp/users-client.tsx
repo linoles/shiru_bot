@@ -125,7 +125,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
           <div className="w-full flex items-center justify-center">
             <h2 className="text-lg font-bold mb-4 text-muted-foreground">КАМЕНЬ, НОЖНИЦЫ, БУМАГА</h2>
           </div>
-          <div className="flex flex-1/3 flex-row items-center justify-around space-x-1 w-[calc(100vw-2rem)]">
+          <div className="flex flex-1/3 flex-row items-center justify-around space-x-1 w-[calc(100vw-2rem)] mb-3">
             <div
               onClick={() => choiceHandler("rock")}
               className={`w-[${choiceIcons[3]}%] cursor-pointer text-5xl flex items-center justify-center wood-animation ${hideWood ? 'hide-wood' : ''}`}
@@ -148,10 +148,17 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
               <img src="/wood.png" alt="paper" className="w-full h-full cursor-pointer" />
             </div>
           </div>
-          <button onClick={() => {
-            setChoiceIcons(["rock", "scissors", "paper", "33"]);
-            setHideWood(true);
-          }}>PLAY</button>
+          <div className="w-full h-min flex flex-column justify-center items-center text-3xl font-bold">
+            <button
+              onClick={() => {
+                setChoiceIcons(["rock", "scissors", "paper", "33"]);
+                setHideWood(true);
+              }}
+              className="w-[calc(100vw-2rem-10rem)] flex items-center justify-center p-2 bg-card border border-border hover:border-primary/50 transition-colors cursor-pointer font-bold rounded-4xl"
+            >
+              PLAY
+            </button>
+          </div>
         </div>
       </div>
     </div>
