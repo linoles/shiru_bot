@@ -14,6 +14,9 @@ export interface Points_from {
 export interface CasinoProps {
   [key: string]: number;
 }
+export interface RspProps {
+  [key: string]: number | string | null;
+}
 export interface User {
   tgId: number;
   tgNick: string;
@@ -24,7 +27,8 @@ export interface User {
   casinoBet: number;
   lastFreeCasino: number;
   freeCasinoNow: boolean;
-  freeCasinoProps: CasinoProps
+  freeCasinoProps: CasinoProps;
+  rspProps: RspProps;
 }
 
 export default function ClientComponent({ initialUsers }: { initialUsers: User[] }) {
@@ -33,6 +37,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
+    console.info(tg)
     if (tg) {
       const startParam = window.Telegram.WebApp.initDataUnsafe?.start_param;
       if (startParam && startParam !== null) {

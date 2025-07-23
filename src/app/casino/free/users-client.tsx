@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import "@/src/app/globals.css";
 import Image from 'next/image';
-import { CasinoProps, Points_from } from '../../users-client';
+import { CasinoProps, Points_from, User } from '../../users-client';
 
 declare global {
   interface Window {
@@ -11,22 +11,9 @@ declare global {
   }
 }
 
-export interface User {
-  tgId: number;
-  tgNick: string;
-  tgUsername: string;
-  points: number;
-  lvl: number;
-  points_from: Points_from;
-  casinoBet: number;
-  lastFreeCasino: number;
-  freeCasinoNow: boolean;
-  freeCasinoProps: CasinoProps
-}
-
 export default function ClientComponent({ initialUsers }: { initialUsers: User[] }) {
   const [users, setUsers] = useState<User[]>(initialUsers);
-  const [curUser, setCurUser] = useState<User>({ tgId: 0, tgNick: '', tgUsername: '', points: 0, lvl: 1, points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 }, casinoBet: 100, lastFreeCasino: 0, freeCasinoNow: false, freeCasinoProps: { done: 0, points: 0 } });
+  const [curUser, setCurUser] = useState<User>({ tgId: 0, tgNick: '', tgUsername: '', points: 0, lvl: 1, points_from: { rsp: 0, casino: 0, emoji: 0, distribute: 0, feud: 0 }, casinoBet: 100, lastFreeCasino: 0, freeCasinoNow: false, freeCasinoProps: { done: 0, points: 0 }, rspProps: { enemy: 0, choice: null } });
   const [tgData, setTgData] = useState<any>(null);
   const symbols = ['🍇', '🍋', 'BAR', '7️⃣'];
   const rand_choices = ["🍀", "🍀", "🍀"];
