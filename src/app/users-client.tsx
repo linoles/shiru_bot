@@ -37,7 +37,7 @@ export default function ClientComponent({ initialUsers }: { initialUsers: User[]
   
   useEffect(() => {
     const tg = window.Telegram?.WebApp;
-    console.info(tg)
+    console.info(window.Telegram);
     if (tg) {
       const startParam = window.Telegram.WebApp.initDataUnsafe?.start_param;
       if (startParam && startParam !== null) {
